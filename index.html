@@ -6,7 +6,7 @@
 <title>Familiemad</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;1,300&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#FAF7F2;--sf:#FFF;--sf2:#F3EFE8;--ac:#D4622A;--acs:#FAEADE;--gr:#3A6B3F;--grs:#E3EEE4;--tx:#1C1A17;--mu:#7A756C;--bd:rgba(28,26,23,0.1);--r:16px;--star:#E8A020}
+:root{--bg:#FAF7F2;--sf:#FFF;--sf2:#F3EFE8;--ac:#D4622A;--acs:#FAEADE;--gr:#3A6B3F;--grs:#E3EEE4;--tx:#1C1A17;--mu:#7A756C;--bd:rgba(28,26,23,0.1);--r:16px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;font-size:15px;overflow:hidden}
 #app{display:flex;flex-direction:column;height:100%;max-width:480px;margin:0 auto}
@@ -22,7 +22,6 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 .nb.active{color:var(--ac)}
 .nb svg{width:22px;height:22px;stroke-width:1.6}
 .card{background:var(--sf);border-radius:var(--r);border:1px solid var(--bd);overflow:hidden}
-.sec{padding:0 16px;margin-bottom:14px}
 .gbtn{display:flex;align-items:center;gap:6px;background:var(--ac);color:white;border:none;border-radius:20px;padding:7px 14px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500}
 .gbtn svg{width:14px;height:14px;stroke:white}
 .bcard{margin:0 16px 12px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:14px}
@@ -78,10 +77,6 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 .fpill{background:none;border:1.5px solid var(--bd);border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--mu);font-family:'DM Sans',sans-serif;white-space:nowrap;flex-shrink:0}
 .fpill.active{background:var(--tx);color:white;border-color:var(--tx)}
 .fav-empty{padding:40px 20px;text-align:center;color:var(--mu);font-size:14px;line-height:1.6}
-.portions-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;background:var(--sf2);border-radius:12px;padding:10px 14px}
-.portions-row label{font-size:13px;color:var(--mu);white-space:nowrap}
-.portions-row input[type=range]{flex:1;accent-color:var(--ac)}
-.portions-row span{font-size:14px;font-weight:500;min-width:24px;text-align:right}
 .mo{position:fixed;inset:0;background:rgba(28,26,23,.5);z-index:200;display:none;align-items:flex-end;backdrop-filter:blur(4px)}
 .mo.open{display:flex}
 .md{background:var(--sf);border-radius:24px 24px 0 0;width:100%;max-height:92dvh;overflow-y:auto;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));animation:su .3s cubic-bezier(.34,1.56,.64,1)}
@@ -111,7 +106,6 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 </head>
 <body>
 <div id="app">
-
 <div class="screen active" id="screen-plan">
   <div class="top-bar"><h1>Familie<em>mad</em></h1><p id="psub">5 dage · 4 pers</p></div>
   <div class="dsw"><div class="ds" id="ds"></div>
@@ -122,9 +116,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
     <button class="share-btn" onclick="sharePlan()">📤 Del madplan</button>
     <button class="share-btn" onclick="copyPlan()">📋 Kopier</button>
   </div>
-  <div class="sec"><div class="card" id="plan-list"></div></div>
+  <div style="padding:0 16px;margin-bottom:14px"><div class="card" id="plan-list"></div></div>
 </div>
-
 <div class="screen" id="screen-list">
   <div class="top-bar"><h1>Ind<em>køb</em></h1><p>Fra ugeplanen</p></div>
   <button class="alb" onclick="buildList()">✦ Generer fra ugeplan</button>
@@ -136,300 +129,396 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
     <button class="share-btn" onclick="shareList()">📤 Send liste</button>
     <button class="share-btn" onclick="copyList()">📋 Kopier liste</button>
   </div>
-  <div class="lar"><input class="ti" id="list-input" style="flex:1;background:var(--sf2);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;font-size:15px;font-family:'DM Sans',sans-serif;color:var(--tx);outline:none" placeholder="Tilsæt vare..." onkeydown="if(event.key==='Enter')addItem()"><button class="lab" onclick="addItem()">+</button></div>
+  <div class="lar"><input id="list-input" style="flex:1;background:var(--sf2);border:1px solid var(--bd);border-radius:12px;padding:10px 14px;font-size:15px;font-family:'DM Sans',sans-serif;color:var(--tx);outline:none" placeholder="Tilsæt vare..." onkeydown="if(event.key==='Enter')addItem()"><button class="lab" onclick="addItem()">+</button></div>
   <div id="list-con" style="margin:0 16px"></div>
   <div id="list-tot"></div>
 </div>
-
 <div class="screen" id="screen-favs">
   <div class="top-bar"><h1>Favor<em>itter</em></h1><p>Dine gemte retter</p></div>
   <div class="filter-row" id="fav-filters"></div>
   <div id="fav-list" style="padding:0 16px"></div>
 </div>
-
 <nav class="nav">
   <button class="nb active" onclick="showS('plan',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Madplan</button>
   <button class="nb" onclick="showS('list',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><polyline points="3 6 4 7 6 5"/><polyline points="3 12 4 13 6 11"/><polyline points="3 18 4 19 6 17"/></svg>Indkøb</button>
   <button class="nb" onclick="showS('favs',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Favoritter</button>
 </nav>
 </div>
-
 <div class="mo" id="modal" onclick="closeMo(event)"><div class="md"><div class="mh"></div><div class="mc" id="mb"></div></div></div>
 <div class="toast" id="toast"></div>
-
 <script>
-const M=[
-// Pasta & ris
-{n:"Spaghetti bolognese",t:35,c:78,sy:["B","E"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Spaghetti",q:"400g",p:12},{n:"Hakket oksekød",q:"500g",p:38},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"3 fed",p:2},{n:"Passata",q:"400ml",p:10},{n:"Gulerødder",q:"1 stk",p:3},{n:"Selleri",q:"2 stængler",p:4},{n:"Tomatpuré",q:"2 spsk",p:3},{n:"Rødvin",q:"1 dl",p:6},{n:"Parmesan",q:"50g",p:10}],s:["Hak løg, hvidløg, gulerødder og selleri fint. Svits i olie 5 min til bløde.","Tilsæt hakket kød og brun grundigt — rør ikke for meget, lad det tage farve.","Rør tomatpuré i og steg 2 min. Deglacér med rødvin og lad fordampe.","Hæld passata i. Krydr med salt, peber og en knivspids sukker. Simre 15 min.","Kog spaghetti i rigeligt saltet vand. Gem 1 dl kogevand inden afvanding.","Bland pasta med sauce og lidt kogevand. Riv parmesan over."]},
-{n:"Pasta carbonara",t:25,c:65,sy:["E"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Spaghetti",q:"400g",p:12},{n:"Guanciale eller bacon",q:"200g",p:22},{n:"Æg",q:"2 stk",p:6},{n:"Æggeblommer",q:"3 stk",p:5},{n:"Pecorino eller parmesan",q:"80g",p:14},{n:"Sort peber",q:"rigeligt",p:2}],s:["Kog spaghetti — gem 2 dl kogevand.","Steg guanciale/bacon ved middel varme til fedtet smelter og det bliver let sprødt.","Pisk æg, æggeblommer og revet ost. Krydr generøst med friskkværnet sort peber.","Tag panden af varmen. Vend pasta i og tilsæt æg-blandingen.","Rør hurtigt og tilsæt kogevand lidt ad gangen til silkeblød sauce — ingen direkte varme!","Server straks med ekstra ost og peber."]},
-{n:"Pasta arrabiata med chorizo",t:25,c:65,sy:["E"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Penne",q:"400g",p:12},{n:"Chorizo",q:"150g",p:20},{n:"Hakkede tomater",q:"2 dåser",p:16},{n:"Hvidløg",q:"4 fed",p:2},{n:"Chiliflager",q:"1 tsk",p:2},{n:"Tomatpuré",q:"1 spsk",p:2},{n:"Basilikum",q:"1 håndfuld",p:5},{n:"Parmesan",q:"40g",p:8}],s:["Skær chorizo i skiver og steg sprøde. Tag ud — behold fedtet.","Svits hvidløg og chiliflager i chorizofedtet 1 min. Rør tomatpuré i og steg 1 min.","Tilsæt tomater, krydr og simre 12 min til saucen er koncentreret.","Kog penne. Gem lidt kogevand inden afvanding.","Bland pasta med sauce, chorizo og lidt kogevand.","Top med basilikum og parmesan."]},
-{n:"Laksepasta med fløde",t:25,c:98,sy:["C","E"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Tagliatelle",q:"400g",p:14},{n:"Laks",q:"400g",p:55},{n:"Fløde",q:"2 dl",p:14},{n:"Hvidløg",q:"2 fed",p:1},{n:"Citron",q:"1 stk",p:5},{n:"Dild",q:"1 bundt",p:6},{n:"Kapers",q:"1 spsk",p:5},{n:"Hvidvin",q:"½ dl",p:4}],s:["Kog pasta — gem kogevand.","Skær laks i tern, krydr med salt og peber. Steg i smør 2-3 min — stadig lyserød indeni.","Svits hvidløg 1 min. Deglacér med hvidvin og lad fordampe.","Tilsæt fløde og kapers. Kog 2 min til let tyknet.","Smag til med citronsaft, salt og peber.","Vend pasta i saucen med lidt kogevand. Top med hakket dild."]},
-{n:"Pasta med pesto og kylling",t:25,c:72,sy:["A","E"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Penne",q:"400g",p:12},{n:"Kyllingebryst",q:"400g",p:32},{n:"Grøn pesto",q:"4 spsk",p:14},{n:"Soltørrede tomater",q:"80g",p:10},{n:"Parmesan",q:"40g",p:8},{n:"Pinjekerner",q:"30g",p:10},{n:"Hvidløg",q:"2 fed",p:1},{n:"Cherrytomater",q:"200g",p:10}],s:["Kog pasta — gem kogevand.","Rist pinjekerner på tør pande til gyldne. Tag ud.","Krydr kylling og steg i tern 5-6 min med hvidløg. Tilsæt cherrytomater de sidste 2 min.","Bland varm pasta med pesto og 2-3 spsk kogevand — pestoens olie binder saucen.","Vend kylling og soltørrede tomater i. Smag til.","Top med parmesan og pinjekerner."]},
-// Kylling
-{n:"Kyllingelår med rodfrugter",t:45,c:82,sy:["A"],season:[0,1,2,3,8,9,10,11],i:[{n:"Kyllingelår",q:"4 stk",p:38},{n:"Kartofler",q:"600g",p:9},{n:"Gulerødder",q:"3 stk",p:6},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"5 fed",p:2},{n:"Timian",q:"4 kviste",p:4},{n:"Citron",q:"1 stk",p:5},{n:"Olivenolie",q:"3 spsk",p:5},{n:"Hvidvin",q:"1 dl",p:5}],s:["Forvarm ovn til 210°C.","Halver kartofler, skær gulerødder og løg groft. Læg i fad, dryp med olie, krydr.","Hæld hvidvin i bunden af fadet.","Tør kyllingelår og krydr generøst med salt og peber. Læg ovenpå grøntsagerne.","Pres citron over og fordel timian og hele hvidløgsfed.","Bag 35-40 min — kyllingen er færdig når skæres til benet og saften er klar."]},
-{n:"Kylling tikka masala",t:35,c:85,sy:["A","F"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"600g",p:42},{n:"Tikka masala paste",q:"4 spsk",p:14},{n:"Kokosmælk",q:"400ml",p:16},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Løg",q:"1 stk",p:3},{n:"Hvidløg",q:"3 fed",p:2},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Ris",q:"3 dl",p:8},{n:"Naturel yoghurt",q:"3 spsk",p:5},{n:"Garam masala",q:"1 tsk",p:3}],s:["Mariner kylling i yoghurt og halvdelen af tikka paste mindst 10 min.","Kog ris.","Svits løg 5 min til gylden. Tilsæt hvidløg og ingefær 1 min.","Tilsæt resten af pasten og garam masala — steg 2 min til duften blomstrer.","Tilsæt kylling og brun 4-5 min. Tilsæt tomater og kokosmælk.","Simre 15 min. Smag til med salt — server over ris."]},
-{n:"Kylling wok med broccoli",t:25,c:72,sy:["A","F"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Broccoli",q:"1 hoved",p:14},{n:"Cashewnødder",q:"80g",p:12},{n:"Soyasauce",q:"3 spsk",p:4},{n:"Østerssauce",q:"2 spsk",p:6},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Hvidløg",q:"3 fed",p:2},{n:"Sesamolie",q:"1 spsk",p:5},{n:"Ris",q:"3 dl",p:8}],s:["Kog ris.","Rist cashewnødder på tør pande til gyldne. Tag ud.","Bland soya, østerssauce, ingefær og hvidløg til sauce.","Wok kylling ved høj varme 3-4 min til gylden — ikke for meget ad gangen.","Tilsæt broccoli og wok 3 min — stadig med bid.","Hæld sauce over, rør 1 min. Tilsæt sesamolie og cashews. Server over ris."]},
-{n:"Kyllingesuppe med nudler",t:40,c:68,sy:["A"],season:[0,1,2,9,10,11],i:[{n:"Kyllingebryst",q:"400g",p:30},{n:"Gulerødder",q:"3 stk",p:6},{n:"Selleri",q:"3 stængler",p:5},{n:"Løg",q:"1 stk",p:3},{n:"Hvidløg",q:"2 fed",p:1},{n:"Æggenudler",q:"200g",p:10},{n:"Kyllingebouillon",q:"1,5 L",p:12},{n:"Timian",q:"2 kviste",p:3},{n:"Laurbærblad",q:"1 stk",p:1},{n:"Persille",q:"1 håndfuld",p:4}],s:["Kog bouillon op med halveret løg, timian, laurbær og hvidløg — giver dybde.","Tilsæt kyllingebryst og kog ved svag varme 15-18 min. Tag op og riv i strimler.","Si bouillonen. Skær gulerødder og selleri i fine skiver og kog 8 min.","Tilsæt nudler og kog efter pakkens anvisning.","Kom kylling tilbage. Smag til med salt og peber.","Server med rigeligt hakket persille."]},
-{n:"Kylling i rødvin",t:45,c:85,sy:["A"],season:[0,1,2,9,10,11],i:[{n:"Kyllingelår",q:"4 stk",p:38},{n:"Rødvin",q:"2 dl",p:12},{n:"Champignon",q:"250g",p:14},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"3 fed",p:2},{n:"Gulerødder",q:"2 stk",p:4},{n:"Bacon",q:"100g",p:12},{n:"Timian",q:"3 kviste",p:4},{n:"Tomatpuré",q:"1 spsk",p:2},{n:"Kartofler",q:"700g",p:10}],s:["Brun kyllingelår med salt og peber 4-5 min per side til gylden. Tag ud.","Steg bacon, løg og hvidløg 4 min. Tilsæt champignon og gulerødder 3 min.","Rør tomatpuré i. Hæld rødvin i og skrab bunden — det er her smagen sidder.","Læg kylling tilbage med timian. Simre tildækket 25 min.","Kog kartofler imens.","Smag saucen til — reducer evt. lidt. Server med kartofler."]},
-{n:"Kylling teriyaki med edamame",t:25,c:72,sy:["A","F"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Soyasauce",q:"3 spsk",p:4},{n:"Mirin",q:"3 spsk",p:8},{n:"Sake eller tør sherry",q:"2 spsk",p:5},{n:"Sukker",q:"1 tsk",p:1},{n:"Ris",q:"3 dl",p:8},{n:"Edamame",q:"200g",p:12},{n:"Agurk",q:"1 stk",p:8},{n:"Sesamfrø",q:"2 spsk",p:5}],s:["Bland soya, mirin, sake og sukker til teriyakisauce.","Kog ris med edamame de sidste 5 min.","Skær kylling i strimler og steg ved høj varme 4 min til gylden.","Hæld sauce over og lad karamellisere 1-2 min — pas på det ikke brænder.","Skær agurk i tynde skiver.","Anret over ris og drys sesamfrø over."]},
-{n:"Grøn thai karry med kylling",t:30,c:82,sy:["A","F"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Grøn karrypaste",q:"2 spsk",p:10},{n:"Kokosmælk",q:"400ml",p:16},{n:"Peberfrugt",q:"2 stk",p:10},{n:"Bambusskud",q:"1 dåse",p:8},{n:"Fiskesauce",q:"2 spsk",p:5},{n:"Palmesukker eller brun farin",q:"1 tsk",p:2},{n:"Ris",q:"3 dl",p:8},{n:"Limeblade",q:"3 stk",p:3},{n:"Lime",q:"1 stk",p:4}],s:["Kog ris.","Svits karrypaste i lidt olie 1-2 min til duften blomstrer.","Tilsæt kylling i tern og steg 4 min.","Hæld kokosmælk i. Tilsæt fiskesauce, palmesukker, limeblade og bambusskud.","Simre 12 min. Tilsæt peberfrugt de sidste 3 min.","Smag til med limesaft — balancen er sød, salt og syrlig. Server over ris."]},
-{n:"Kylling honning-sennep",t:40,c:75,sy:["A"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingelår",q:"4 stk",p:38},{n:"Honning",q:"3 spsk",p:8},{n:"Dijonsennep",q:"3 spsk",p:6},{n:"Fuldkorns sennep",q:"1 spsk",p:4},{n:"Hvidløg",q:"3 fed",p:2},{n:"Timian",q:"3 kviste",p:4},{n:"Kartofler",q:"700g",p:10},{n:"Løg",q:"1 stk",p:3}],s:["Forvarm ovn til 200°C.","Rør honning, begge sennep og presset hvidløg til glasur — dobbelt sennep giver dybde.","Halver kartofler og skær løg i både. Læg i fad med olie og krydr.","Tør kyllingen og gnid glasur grundigt ind — også under skindet.","Læg kylling ovenpå kartofler med timian. Bag 30-35 min til karamelliseret.","Hvil 5 min inden servering."]},
-// Fisk
-{n:"Laks i folie med dild",t:30,c:115,sy:["C"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Laksefillet",q:"4 stk",p:72},{n:"Citron",q:"2 stk",p:8},{n:"Dild",q:"1 bundt",p:6},{n:"Kartofler",q:"700g",p:10},{n:"Smør",q:"40g",p:6},{n:"Hvidvin",q:"2 spsk",p:4},{n:"Kapers",q:"1 spsk",p:5},{n:"Hvidløg",q:"2 fed",p:1}],s:["Forvarm ovn til 200°C. Kog kartofler 15 min.","Læg hvert laksestykke på dobbelt folie. Krydr med salt og peber.","Fordel smørklatter, citronskiver, dild, skiveskåret hvidløg og kapers over.","Dryp hvidvin over. Fold foliepakkerne tæt — damp er nøglen.","Bag 15-18 min. Lad hvile 2 min inden åbning — damp!","Server med kartofler med smør og ekstra dild."]},
-{n:"Laks med pesto og asparges",t:25,c:112,sy:["C"],season:[3,4,5],i:[{n:"Laksefillet",q:"4 stk",p:70},{n:"Grøn pesto",q:"4 spsk",p:14},{n:"Asparges",q:"1 bundt",p:18},{n:"Cherrytomater",q:"200g",p:10},{n:"Citron",q:"1 stk",p:5},{n:"Parmesan",q:"30g",p:6},{n:"Olivenolie",q:"2 spsk",p:4}],s:["Forvarm ovn til 200°C.","Knæk de træede ender af aspargesene — de brækker naturligt det rigtige sted.","Læg asparges og tomater på bageplade. Dryp med olie, krydr og bag 5 min.","Læg laks ovenpå og smør et generøst lag pesto på oversiden.","Bag 12-14 min — laks er færdig når den flager let.","Riv parmesan over. Klem citron over og server straks."]},
-{n:"Torsk med sennepssauce",t:30,c:88,sy:["C"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Torskefilet",q:"4 stk",p:55},{n:"Kartofler",q:"700g",p:10},{n:"Dijonsennep",q:"2 spsk",p:5},{n:"Fuldkorns sennep",q:"1 spsk",p:4},{n:"Fløde",q:"2 dl",p:14},{n:"Smør",q:"40g",p:6},{n:"Dild",q:"½ bundt",p:4},{n:"Citron",q:"1 stk",p:5},{n:"Kapers",q:"1 spsk",p:5}],s:["Kog kartofler 18 min.","Krydr torsk generøst — tør overfladen med køkkenrulle for bedre stegeskorpe.","Steg i smør ved middel-høj varme 3-4 min per side. Tag ud og hold varm.","Hæld fløde i panden og skrab bunden. Lad reducere 2 min.","Rør begge sennep, kapers og citronsaft i. Smag til — saucen skal være syrlig og rund.","Server torsk med sennepssauce, kartofler og hakket dild."]},
-{n:"Fiskefrikadeller med remoulade",t:30,c:72,sy:["C"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Fiskefars",q:"500g",p:38},{n:"Æg",q:"1 stk",p:3},{n:"Mel",q:"3 spsk",p:2},{n:"Løg",q:"1 stk",p:3},{n:"Dild",q:"½ bundt",p:4},{n:"Citronskal",q:"½ stk",p:2},{n:"Kartofler",q:"600g",p:9},{n:"Frosne ærter",q:"200g",p:7},{n:"Remoulade",q:"4 spsk",p:8},{n:"Smør",q:"30g",p:5}],s:["Kog kartofler 18 min.","Hak løg og dild fint. Riv citronskal.","Bland fiskefars med æg, mel, løg, dild og citronskal. Krydr generøst — farsen skal smage lidt for salt.","Form frikadeller med to skeer og steg i smør 3-4 min per side til gyldne.","Blancher ærter 2 min i kogende vand.","Server med kartofler, ærter og remoulade."]},
-{n:"Rejer wok med nudler",t:20,c:88,sy:["F"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Pillede rejer",q:"400g",p:50},{n:"Æggenudler",q:"200g",p:10},{n:"Peberfrugt",q:"2 stk",p:10},{n:"Gulerødder",q:"2 stk",p:4},{n:"Hvidløg",q:"3 fed",p:2},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Soyasauce",q:"2 spsk",p:3},{n:"Østerssauce",q:"2 spsk",p:6},{n:"Sesamolie",q:"1 spsk",p:5},{n:"Lime",q:"1 stk",p:4}],s:["Kog nudler 4 min. Dræn og skyl koldt — forhindrer klumpning.","Skær peberfrugt og gulerødder i strimler.","Wok grøntsager med ingefær og hvidløg ved høj varme 3 min.","Tilsæt rejer og wok 2 min til lyserøde — de bliver seje ved for lang varme.","Tilsæt nudler, soya, østerssauce og sesamolie. Rør 1 min.","Klem lime over og server straks."]},
-// Svinekød
-{n:"Frikadeller med kartoffelmos",t:35,c:68,sy:["D"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Hakket svinekød",q:"500g",p:30},{n:"Æg",q:"1 stk",p:3},{n:"Mel",q:"3 spsk",p:2},{n:"Mælk",q:"1 dl",p:3},{n:"Løg",q:"1 stk",p:3},{n:"Allehånde",q:"½ tsk",p:2},{n:"Kartofler",q:"800g",p:10},{n:"Smør",q:"60g",p:9},{n:"Varm mælk til mos",q:"1,5 dl",p:4},{n:"Rødkål",q:"200g",p:10}],s:["Kog kartofler 20 min.","Hak løg fint. Bland med kød, æg, mel, mælk og allehånde. Krydr godt — farsen skal smage.","Form runde frikadeller — fugt hænderne så de ikke klistrer.","Steg i smør ved middel varme 4-5 min per side til gyldne og gennemstegte.","Mos kartofler med smør og varm mælk til glat og luftig konsistens. Krydr.","Server med varm rødkål."]},
-{n:"Svinekoteletter med æbler",t:30,c:72,sy:["D"],season:[7,8,9,10,11],i:[{n:"Svinekoteletter",q:"4 stk",p:38},{n:"Æbler",q:"3 stk",p:9},{n:"Løg",q:"2 stk",p:5},{n:"Kartofler",q:"700g",p:9},{n:"Smør",q:"40g",p:7},{n:"Fløde",q:"1 dl",p:7},{n:"Dijonsennep",q:"2 spsk",p:5},{n:"Calvados eller æblejuice",q:"2 spsk",p:4}],s:["Kog kartofler.","Skær æbler i tern og kog med lidt smør og en tsk sukker 8 min til blød compote.","Krydr koteletter og steg i smør 4 min per side — lad dem hvile 3 min inden servering.","Svits løg 5 min i stegepanden. Deglacér med calvados.","Tilsæt sennep og fløde — kog 2 min. Smag til.","Server med løg-flødesauce, æblekompot og kartofler."]},
-{n:"Svinemørbrad i flødesauce",t:30,c:88,sy:["D"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Svinemørbrad",q:"500g",p:45},{n:"Champignon",q:"300g",p:16},{n:"Fløde",q:"2 dl",p:14},{n:"Løg",q:"1 stk",p:3},{n:"Hvidløg",q:"2 fed",p:1},{n:"Hvidvin",q:"1 dl",p:8},{n:"Timian",q:"2 kviste",p:3},{n:"Dijonsennep",q:"1 spsk",p:3},{n:"Kartofler",q:"700g",p:10}],s:["Kog kartofler.","Skær mørbrad i 2 cm tykke medallioner. Krydr og steg i smør 3 min per side — stadig let rosa. Tag ud og hvil.","Steg løg, hvidløg og champignon 5 min.","Deglacér med hvidvin og lad fordampe halvt.","Tilsæt fløde og timian — simre 4 min. Rør sennep i og smag til.","Kom kød tilbage og varm forsigtigt 2 min."]},
-{n:"Tacos med hakket kød",t:25,c:82,sy:["B","D"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Hakket oksekød",q:"500g",p:38},{n:"Tacoskaller",q:"12 stk",p:16},{n:"Spidskommen",q:"1 tsk",p:2},{n:"Paprika",q:"1 tsk",p:2},{n:"Chilipulver",q:"½ tsk",p:1},{n:"Oregano",q:"½ tsk",p:1},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"2 fed",p:1},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Avocado",q:"2 stk",p:14},{n:"Cheddar",q:"100g",p:10}],s:["Hak løg og brun med hvidløg 3 min. Tilsæt kød og brun grundigt 5-6 min.","Rør krydderier i og steg 1 min — det er her smagen kommer.","Tilsæt tomater og simre 8 min til saucen er tyknet.","Mos avocado med salt, citron og evt. lidt chili.","Varm tacoskaller 4 min i ovnen.","Server til selvsamling — krydderiblandingen er bedre end en pose."]},
-{n:"Chili con carne",t:35,c:75,sy:["B"],season:[0,1,2,9,10,11],i:[{n:"Hakket oksekød",q:"500g",p:38},{n:"Kidneybønner",q:"2 dåser",p:14},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"3 fed",p:2},{n:"Chilipulver",q:"1 tsk",p:2},{n:"Spidskommen",q:"1 tsk",p:2},{n:"Røget paprika",q:"1 tsk",p:3},{n:"Mørk chokolade",q:"10g",p:3},{n:"Ris",q:"3 dl",p:8}],s:["Svits løg og hvidløg 4 min. Tilsæt kød og brun grundigt 6 min.","Rør krydderier i og steg 1 min.","Tilsæt tomater og bønner. Simre 20 min.","Rør et stykke mørk chokolade i — giver dybde og runder chilien af.","Kog ris.","Server med ris, revet ost og creme fraiche."]},
-{n:"Hakkebøf med løg og sovs",t:30,c:72,sy:["B"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Hakket oksekød",q:"500g",p:38},{n:"Løg",q:"4 stk",p:8},{n:"Kartofler",q:"800g",p:10},{n:"Smør",q:"50g",p:8},{n:"Mel",q:"2 spsk",p:1},{n:"Oksebouillon",q:"4 dl",p:6},{n:"Soya",q:"1 spsk",p:2},{n:"Brun farin",q:"1 tsk",p:1}],s:["Kog kartofler.","Skær løg i ringe og steg i smør ved lav varme 15 min — tilsæt brun farin de sidste 2 min for karamellisering.","Form bøffer, krydr og steg 3-4 min per side. Hold varm.","Rør mel ind i stegepanden og brun 1 min.","Tilsæt bouillon og soya under omrøring. Simre 5 min til jævn sovs.","Server med karamelliserede løg, sovs og kartofler."]},
-{n:"Medisterpølse med persillesauce",t:30,c:65,sy:["D"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Medisterpølse",q:"600g",p:32},{n:"Kartofler",q:"800g",p:10},{n:"Smør",q:"50g",p:8},{n:"Mel",q:"3 spsk",p:2},{n:"Mælk",q:"4 dl",p:7},{n:"Persille",q:"1 håndfuld",p:4},{n:"Løg",q:"1 stk",p:3},{n:"Muskatnød",q:"knivspids",p:1}],s:["Kog kartofler 20 min.","Steg medisterpølse ved middel varme 10-12 min. Vend jævnligt — den må ikke briste.","Svits løg i smør 3 min. Rør mel i og kog 2 min under omrøring.","Tilsæt mælk lidt ad gangen under konstant omrøring til jævn sauce.","Riv muskatnød i og rør hakket persille i. Smag til med salt og peber.","Server med kartofler."]},
-{n:"Biksemad med sprøde æg",t:25,c:55,sy:["D"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kartofler",q:"700g",p:9},{n:"Røget pølse",q:"300g",p:25},{n:"Løg",q:"2 stk",p:5},{n:"Æg",q:"4 stk",p:10},{n:"Smør",q:"30g",p:5},{n:"Worcestershiresauce",q:"1 spsk",p:4},{n:"Rødbeder",q:"4 spsk",p:6}],s:["Kog kartofler 10 min — de skal have bid. Skær i tern.","Skær pølse og løg i tern. Steg løg gyldne i smør.","Tilsæt kartofler og pølse. Steg ved høj varme 10-12 min — rør sjældent for sprøde kanter.","Tilsæt worcestershiresauce og krydr. Smag til.","Steg spejlæg med sprøde hvider og flydende blomme.","Server biksemad toppet med æg og rødbeder ved siden."]},
-// Vegetar
-{n:"Linse dahl med naan",t:30,c:52,sy:["F"],season:[0,1,2,9,10,11],i:[{n:"Røde linser",q:"300g",p:14},{n:"Kokosmælk",q:"400ml",p:16},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"4 fed",p:2},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Gurkemeje",q:"1 tsk",p:2},{n:"Spidskommen",q:"1 tsk",p:2},{n:"Garam masala",q:"1 tsk",p:3},{n:"Frossen spinat",q:"200g",p:8},{n:"Naan-brød",q:"4 stk",p:14}],s:["Svits løg 5 min. Tilsæt hvidløg og ingefær 1 min.","Tilsæt gurkemeje, spidskommen og garam masala — steg 1 min til duften blomstrer.","Tilsæt linser, tomater og kokosmælk. Simre 20 min til linser er møre og cremede.","Rør spinat i og lad tø og varme 3 min.","Smag til med salt og limesaft — dahlen skal være fyldig og lidt syrlig.","Varm naan direkte på gasblus eller i tør pande. Server med naturel yoghurt."]},
-{n:"Marokkansk kikærtegryde",t:30,c:52,sy:["F"],season:[0,1,2,9,10,11],i:[{n:"Kikærter",q:"2 dåser",p:14},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Kokosmælk",q:"200ml",p:9},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"3 fed",p:2},{n:"Gurkemeje",q:"1 tsk",p:2},{n:"Spidskommen",q:"1 tsk",p:2},{n:"Kanel",q:"½ tsk",p:1},{n:"Harissa",q:"1 tsk",p:4},{n:"Rosiner",q:"40g",p:5},{n:"Couscous",q:"300g",p:12},{n:"Grøntsagsbouillon",q:"4 dl",p:5}],s:["Svits løg og hvidløg 4 min. Tilsæt krydderier og harissa — steg 1 min.","Tilsæt tomater, kokosmælk, kikærter og rosiner. Simre 15 min.","Hæld kogende bouillon over couscous — dæk med låg og lad svulme 5 min.","Fluff couscous med en gaffel og dryp lidt olie over.","Smag gryde til med salt, citronsaft og evt. mere harissa.","Server gryde over couscous med frisk koriander."]},
-{n:"Grøntsagslasagne",t:45,c:68,sy:["E"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Lasagneplader",q:"250g",p:12},{n:"Squash",q:"2 stk",p:14},{n:"Peberfrugt",q:"2 stk",p:10},{n:"Champignon",q:"200g",p:12},{n:"Passata",q:"500ml",p:12},{n:"Smør",q:"50g",p:8},{n:"Mel",q:"4 spsk",p:2},{n:"Mælk",q:"5 dl",p:8},{n:"Parmesan",q:"80g",p:14},{n:"Hvidløg",q:"2 fed",p:1},{n:"Muskatnød",q:"knivspids",p:1}],s:["Forvarm ovn til 200°C.","Skær grøntsager i tern og steg med hvidløg 8 min til bløde. Krydr.","Lav bechamel: smelt smør, rør mel i og kog 2 min. Tilsæt mælk lidt ad gangen under omrøring. Riv muskatnød i.","Skift lag i fad: passata med grøntsager — lasagneplader — bechamel.","Gentag. Slut med bechamel og rigeligt parmesan.","Bag 30-35 min til gylden og bobler."]},
-{n:"Rød linsesuppe med kokos",t:25,c:45,sy:["F"],season:[0,1,2,9,10,11],i:[{n:"Røde linser",q:"250g",p:12},{n:"Kokosmælk",q:"400ml",p:16},{n:"Grøntsagsbouillon",q:"8 dl",p:7},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"3 fed",p:2},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Gurkemeje",q:"1 tsk",p:2},{n:"Spidskommen",q:"1 tsk",p:2},{n:"Chiliflager",q:"½ tsk",p:1},{n:"Lime",q:"1 stk",p:4}],s:["Svits løg, hvidløg og ingefær 4 min.","Tilsæt gurkemeje, spidskommen og chiliflager — steg 1 min.","Tilsæt linser, bouillon og kokosmælk. Kog op og simre 15-18 min.","Blend delvist med stavblender — behold noget tekstur.","Smag til med limesaft, salt og evt. mere chili.","Server med et skvæt kokosmælk og ristede frø."]},
-{n:"Squashsuppe med kokos",t:25,c:50,sy:["F"],season:[7,8,9],i:[{n:"Butternut squash",q:"1 stor",p:18},{n:"Grøntsagsbouillon",q:"1 L",p:8},{n:"Kokosmælk",q:"400ml",p:16},{n:"Løg",q:"1 stk",p:3},{n:"Hvidløg",q:"3 fed",p:2},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Gurkemeje",q:"1 tsk",p:2},{n:"Røget paprika",q:"½ tsk",p:2},{n:"Lime",q:"1 stk",p:4}],s:["Skær squash i tern — skrællen kan blive på og blendes med.","Svits løg, hvidløg og ingefær 4 min. Tilsæt gurkemeje og paprika 1 min.","Tilsæt squash og bouillon. Kog 15 min til squash er mør.","Tilsæt kokosmælk og blend helt glat.","Smag til med limesaft, salt og peber — suppen skal have en sød og let krydret balance.","Server med et skvæt kokosmælk og ristede græskarkerner."]},
-{n:"Hjemmelavet pizza",t:35,c:62,sy:["E"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Pizzabunde",q:"2 stk",p:20},{n:"Passata",q:"200ml",p:8},{n:"Mozzarella",q:"300g",p:20},{n:"Cherrytomater",q:"200g",p:10},{n:"Basilikum",q:"1 bundt",p:6},{n:"Hvidløg",q:"2 fed",p:1},{n:"Olivenolie",q:"2 spsk",p:4},{n:"Oregano",q:"1 tsk",p:2}],s:["Forvarm ovn til 250°C — så varmt som muligt. Brug en bagesten eller forvarm bagepladen.","Bland passata med presset hvidløg, oregano, salt og en tsk olie.","Smør et tyndt lag sauce på bundene — ikke for meget.","Riv mozzarella i stykker og fordel med cherrytomater.","Bag 8-12 min til kanten er gylden og osten bobler.","Tag ud og læg frisk basilikum på straks."]},
-{n:"Spinattærte med feta",t:40,c:62,sy:["E"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Butterdej",q:"1 pk",p:16},{n:"Frossen spinat",q:"300g",p:12},{n:"Fetaost",q:"200g",p:22},{n:"Æg",q:"3 stk",p:8},{n:"Fløde",q:"1 dl",p:7},{n:"Pinjekerner",q:"40g",p:12},{n:"Hvidløg",q:"2 fed",p:1},{n:"Løg",q:"1 stk",p:3},{n:"Muskatnød",q:"knivspids",p:1}],s:["Forvarm ovn til 200°C.","Optø spinat og klem al væske grundigt ud — ellers bliver tærten våd.","Svits løg og hvidløg 3 min. Bland med spinat.","Pisk æg og fløde. Smudr feta i. Riv muskatnød i. Bland med spinat.","Rul dej ud i tærteform og fordel fyldet.","Drys pinjekerner over og bag 25-28 min til gylden og fast."]},
-{n:"Pad thai med rejer",t:25,c:85,sy:["F"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Risnudler",q:"200g",p:10},{n:"Pillede rejer",q:"300g",p:38},{n:"Æg",q:"2 stk",p:5},{n:"Bønnespirer",q:"100g",p:8},{n:"Tamarindpasta",q:"2 spsk",p:8},{n:"Fiskesauce",q:"2 spsk",p:4},{n:"Palmesukker eller brun farin",q:"1 spsk",p:3},{n:"Soyasauce",q:"1 spsk",p:2},{n:"Lime",q:"1 stk",p:4},{n:"Peanuts",q:"50g",p:8}],s:["Udblød risnudler i koldt vand 30 min — eller kogende vand 5 min. Dræn.","Bland tamarind, fiskesauce, palmesukker og soya til pad thai-sauce — smag til, det skal være surt, sødt og salt.","Steg rejer 2 min. Skub til siden og scramble æg.","Tilsæt nudler og sauce. Wok ved høj varme 2 min.","Vend bønnespirer i de allersidste 30 sek.","Anret med hakkede peanuts, limebåde og evt. chilisauce."]},
-{n:"Kylling satay med jordnøddesauce",t:25,c:78,sy:["A","F"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Peanutbutter",q:"4 spsk",p:10},{n:"Kokosmælk",q:"150ml",p:8},{n:"Soyasauce",q:"2 spsk",p:3},{n:"Fiskesauce",q:"1 spsk",p:4},{n:"Palmesukker eller brun farin",q:"1 spsk",p:3},{n:"Ingefær",q:"1 tsk revet",p:2},{n:"Hvidløg",q:"2 fed",p:1},{n:"Lime",q:"1 stk",p:4},{n:"Ris",q:"3 dl",p:8}],s:["Kog ris.","Skær kylling i strimler. Bland med soya, hvidløg og ingefær. Mariner 10 min.","Træk kylling på spyd og steg 5-6 min under vending til gylden.","Rør peanutbutter, kokosmælk, fiskesauce, palmesukker og limesaft til sauce — varm forsigtigt.","Smag saucen til: den skal være salt, sød og let syrlig.","Server med ris og sataysauce."]},
-{n:"Kyllingeburrito",t:25,c:78,sy:["A"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"400g",p:32},{n:"Wraps",q:"6 stk",p:12},{n:"Ris",q:"2 dl",p:6},{n:"Sorte bønner",q:"1 dåse",p:8},{n:"Cheddar",q:"100g",p:10},{n:"Salsa",q:"4 spsk",p:8},{n:"Creme fraiche",q:"1 dl",p:6},{n:"Spidskommen",q:"1 tsk",p:2},{n:"Røget paprika",q:"1 tsk",p:2},{n:"Hvidløgspulver",q:"½ tsk",p:1}],s:["Kog ris.","Bland spidskommen, paprika og hvidløgspulver — krydr kylling og steg i tern 5-6 min.","Varm bønner med lidt spidskommen og salt.","Varm wraps 30 sek i mikroovn — de skal være bløde for at kunne foldes.","Fordel ris, bønner, kylling og ost. Tilsæt salsa og creme fraiche.","Fold siderne ind og rul stramt. Grill evt. 1 min i tør pande for sprød overflade."]},
-{n:"Pitasandwich med kylling",t:20,c:72,sy:["A"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"400g",p:32},{n:"Pitabrød",q:"4 stk",p:10},{n:"Tzatziki",q:"200g",p:14},{n:"Rødløg",q:"1 stk",p:4},{n:"Cherrytomater",q:"200g",p:10},{n:"Salatblade",q:"1 pose",p:8},{n:"Citron",q:"1 stk",p:4},{n:"Paprika og oregano",q:"1 tsk hver",p:3}],s:["Krydr kylling med paprika, oregano, salt og peber.","Steg 5-6 min per side til gennembagt. Hvil 3 min — skær derefter i skiver.","Snit rødløg fint og halvér tomater.","Varm pitabrød 3 min i ovnen og åbn forsigtigt.","Smør tzatziki generøst indeni.","Fyld med salat, kylling, løg og tomater. Klem citron over og server straks."]},
-{n:"Boller i karry",t:35,c:65,sy:["D"],season:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Hakket svinekød",q:"500g",p:30},{n:"Æg",q:"1 stk",p:3},{n:"Mel",q:"2 spsk",p:1},{n:"Løg",q:"2 stk",p:5},{n:"Karrypulver",q:"1½ spsk",p:4},{n:"Gurkemeje",q:"½ tsk",p:1},{n:"Mælk",q:"4 dl",p:7},{n:"Smør",q:"30g",p:5},{n:"Ris",q:"3 dl",p:8}],s:["Kog ris.","Bland kød med æg, mel, salt og peber. Form runde boller — ikke for store.","Brun boller i smør 5 min på alle sider. Tag ud.","Svits løg i samme gryde 4 min. Tilsæt karry og gurkemeje — steg 2 min til duften blomstrer.","Rør mel i, tilsæt mælk lidt ad gangen under omrøring til jævn sauce.","Kom boller tilbage og simre 10-12 min. Server over ris."]}
+var M = [
+  {id:"bolognese",n:"Spaghetti bolognese",t:35,c:78,sy:["B","E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Spaghetti",q:"400g",p:12},{n:"Hakket oksekød",q:"500g",p:38},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"3 fed",p:2},{n:"Passata",q:"400ml",p:10},{n:"Gulerødder",q:"1 stk",p:3},{n:"Selleri",q:"2 stængler",p:4},{n:"Tomatpuré",q:"2 spsk",p:3},{n:"Rødvin",q:"1 dl",p:6},{n:"Parmesan",q:"50g",p:10}]},
+  {id:"carbonara",n:"Pasta carbonara",t:25,c:65,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Spaghetti",q:"400g",p:12},{n:"Guanciale eller bacon",q:"200g",p:22},{n:"Æg",q:"2 stk",p:6},{n:"Æggeblommer",q:"3 stk",p:5},{n:"Pecorino eller parmesan",q:"80g",p:14},{n:"Sort peber",q:"rigeligt",p:2}]},
+  {id:"arrabiata",n:"Pasta arrabiata med chorizo",t:25,c:65,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Penne",q:"400g",p:12},{n:"Chorizo",q:"150g",p:20},{n:"Hakkede tomater",q:"2 dåser",p:16},{n:"Hvidløg",q:"4 fed",p:2},{n:"Chiliflager",q:"1 tsk",p:2},{n:"Tomatpuré",q:"1 spsk",p:2},{n:"Basilikum",q:"1 håndfuld",p:5},{n:"Parmesan",q:"40g",p:8}]},
+  {id:"laksepasta",n:"Laksepasta med fløde",t:25,c:98,sy:["C","E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Tagliatelle",q:"400g",p:14},{n:"Laks",q:"400g",p:55},{n:"Fløde",q:"2 dl",p:14},{n:"Hvidløg",q:"2 fed",p:1},{n:"Citron",q:"1 stk",p:5},{n:"Dild",q:"1 bundt",p:6},{n:"Kapers",q:"1 spsk",p:5},{n:"Hvidvin",q:"½ dl",p:4}]},
+  {id:"pestokylling",n:"Pasta med pesto og kylling",t:25,c:72,sy:["A","E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Penne",q:"400g",p:12},{n:"Kyllingebryst",q:"400g",p:32},{n:"Grøn pesto",q:"4 spsk",p:14},{n:"Soltørrede tomater",q:"80g",p:10},{n:"Parmesan",q:"40g",p:8},{n:"Pinjekerner",q:"30g",p:10},{n:"Hvidløg",q:"2 fed",p:1},{n:"Cherrytomater",q:"200g",p:10}]},
+  {id:"aglio",n:"Spaghetti aglio e olio",t:15,c:35,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Spaghetti",q:"400g",p:12},{n:"Hvidløg",q:"6 fed",p:2},{n:"Chiliflager",q:"1 tsk",p:2},{n:"Olivenolie",q:"5 spsk",p:8},{n:"Persille",q:"1 håndfuld",p:4},{n:"Parmesan",q:"40g",p:8}]},
+  {id:"rejerlingine",n:"Linguine med rejer og hvidløg",t:20,c:88,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Linguine",q:"400g",p:12},{n:"Pillede rejer",q:"350g",p:48},{n:"Hvidløg",q:"5 fed",p:2},{n:"Chili",q:"1 stk",p:3},{n:"Hvidvin",q:"1 dl",p:6},{n:"Smør",q:"30g",p:5},{n:"Citron",q:"1 stk",p:5},{n:"Persille",q:"1 håndfuld",p:4}]},
+  {id:"lasagne",n:"Grøntsagslasagne",t:45,c:68,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Lasagneplader",q:"250g",p:12},{n:"Squash",q:"2 stk",p:14},{n:"Peberfrugt",q:"2 stk",p:10},{n:"Champignon",q:"200g",p:12},{n:"Passata",q:"500ml",p:12},{n:"Smør",q:"50g",p:8},{n:"Mel",q:"4 spsk",p:2},{n:"Mælk",q:"5 dl",p:8},{n:"Parmesan",q:"80g",p:14}]},
+  {id:"mac",n:"Mac and cheese med bacon",t:25,c:62,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Macaroni",q:"400g",p:10},{n:"Cheddar",q:"200g",p:20},{n:"Bacon",q:"150g",p:18},{n:"Mælk",q:"4 dl",p:7},{n:"Smør",q:"40g",p:6},{n:"Mel",q:"3 spsk",p:2},{n:"Dijonsennep",q:"1 tsk",p:2}]},
+  {id:"risotto",n:"Risotto med champignon",t:35,c:62,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Risottoris",q:"300g",p:14},{n:"Champignon",q:"300g",p:16},{n:"Grøntsagsbouillon",q:"1,2 L",p:10},{n:"Løg",q:"1 stk",p:3},{n:"Hvidløg",q:"2 fed",p:1},{n:"Hvidvin",q:"1 dl",p:8},{n:"Parmesan",q:"60g",p:12},{n:"Smør",q:"40g",p:6}]},
+  {id:"kødboller",n:"Kødboller i tomatsauce",t:35,c:68,sy:["B","E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Hakket svinekød",q:"500g",p:30},{n:"Spaghetti",q:"400g",p:12},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Hvidløg",q:"2 fed",p:1},{n:"Parmesan",q:"30g",p:6},{n:"Æg",q:"1 stk",p:3},{n:"Rasp",q:"30g",p:3},{n:"Basilikum",q:"1 håndfuld",p:5}]},
+  {id:"kyllrodfrugt",n:"Kyllingelår med rodfrugter",t:45,c:82,sy:["A"],mo:[0,1,2,3,8,9,10,11],i:[{n:"Kyllingelår",q:"4 stk",p:38},{n:"Kartofler",q:"600g",p:9},{n:"Gulerødder",q:"3 stk",p:6},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"5 fed",p:2},{n:"Timian",q:"4 kviste",p:4},{n:"Citron",q:"1 stk",p:5},{n:"Hvidvin",q:"1 dl",p:5}]},
+  {id:"tikka",n:"Kylling tikka masala",t:35,c:85,sy:["A","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"600g",p:42},{n:"Tikka masala paste",q:"4 spsk",p:14},{n:"Kokosmælk",q:"400ml",p:16},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Løg",q:"1 stk",p:3},{n:"Hvidløg",q:"3 fed",p:2},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Ris",q:"3 dl",p:8},{n:"Yoghurt",q:"3 spsk",p:5}]},
+  {id:"wokbroccoli",n:"Kylling wok med broccoli",t:25,c:72,sy:["A","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Broccoli",q:"1 hoved",p:14},{n:"Cashewnødder",q:"80g",p:12},{n:"Soyasauce",q:"3 spsk",p:4},{n:"Østerssauce",q:"2 spsk",p:6},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Hvidløg",q:"3 fed",p:2},{n:"Sesamolie",q:"1 spsk",p:5},{n:"Ris",q:"3 dl",p:8}]},
+  {id:"teriyaki",n:"Kylling teriyaki med edamame",t:25,c:72,sy:["A","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Soyasauce",q:"3 spsk",p:4},{n:"Mirin",q:"3 spsk",p:8},{n:"Sake eller sherry",q:"2 spsk",p:5},{n:"Sukker",q:"1 tsk",p:1},{n:"Ris",q:"3 dl",p:8},{n:"Edamame",q:"200g",p:12},{n:"Agurk",q:"1 stk",p:8},{n:"Sesamfrø",q:"2 spsk",p:5}]},
+  {id:"thaigron",n:"Grøn thai karry med kylling",t:30,c:82,sy:["A","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Grøn karrypaste",q:"2 spsk",p:10},{n:"Kokosmælk",q:"400ml",p:16},{n:"Peberfrugt",q:"2 stk",p:10},{n:"Bambusskud",q:"1 dåse",p:8},{n:"Fiskesauce",q:"2 spsk",p:5},{n:"Palmesukker",q:"1 tsk",p:2},{n:"Ris",q:"3 dl",p:8},{n:"Lime",q:"1 stk",p:4}]},
+  {id:"honningsennep",n:"Kylling med honning og sennep",t:40,c:75,sy:["A"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingelår",q:"4 stk",p:38},{n:"Honning",q:"3 spsk",p:8},{n:"Dijonsennep",q:"3 spsk",p:6},{n:"Fuldkornssennep",q:"1 spsk",p:4},{n:"Hvidløg",q:"3 fed",p:2},{n:"Timian",q:"3 kviste",p:4},{n:"Kartofler",q:"700g",p:10}]},
+  {id:"satay",n:"Kylling satay med jordnøddesauce",t:25,c:78,sy:["A","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Peanutbutter",q:"4 spsk",p:10},{n:"Kokosmælk",q:"150ml",p:8},{n:"Soyasauce",q:"2 spsk",p:3},{n:"Fiskesauce",q:"1 spsk",p:4},{n:"Palmesukker",q:"1 spsk",p:3},{n:"Ingefær",q:"1 tsk revet",p:2},{n:"Hvidløg",q:"2 fed",p:1},{n:"Lime",q:"1 stk",p:4},{n:"Ris",q:"3 dl",p:8}]},
+  {id:"burrito",n:"Kyllingeburrito",t:25,c:78,sy:["A"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"400g",p:32},{n:"Wraps",q:"6 stk",p:12},{n:"Ris",q:"2 dl",p:6},{n:"Sorte bønner",q:"1 dåse",p:8},{n:"Cheddar",q:"100g",p:10},{n:"Salsa",q:"4 spsk",p:8},{n:"Creme fraiche",q:"1 dl",p:6}]},
+  {id:"pita",n:"Pitasandwich med kylling",t:20,c:72,sy:["A"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"400g",p:32},{n:"Pitabrød",q:"4 stk",p:10},{n:"Tzatziki",q:"200g",p:14},{n:"Rødløg",q:"1 stk",p:4},{n:"Cherrytomater",q:"200g",p:10},{n:"Salatblade",q:"1 pose",p:8},{n:"Citron",q:"1 stk",p:4}]},
+  {id:"fajitas",n:"Kyllingefajitas",t:25,c:82,sy:["A"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Peberfrugt",q:"3 stk",p:15},{n:"Løg",q:"2 stk",p:5},{n:"Avocado",q:"2 stk",p:14},{n:"Wraps",q:"8 stk",p:14},{n:"Fajita-krydderi",q:"2 spsk",p:6},{n:"Creme fraiche",q:"2 dl",p:10}]},
+  {id:"pulled",n:"Pulled chicken med brioche",t:35,c:78,sy:["A"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"600g",p:42},{n:"BBQ-sauce",q:"6 spsk",p:12},{n:"Kyllingebouillon",q:"3 dl",p:5},{n:"Løg",q:"1 stk",p:3},{n:"Spidskål",q:"¼ hoved",p:6},{n:"Gulerødder",q:"2 stk",p:4},{n:"Mayonnaise",q:"3 spsk",p:6},{n:"Briocheboller",q:"4 stk",p:18}]},
+  {id:"laksgrill",n:"Laks i folie med dild",t:30,c:115,sy:["C"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Laksefillet",q:"4 stk",p:72},{n:"Citron",q:"2 stk",p:8},{n:"Dild",q:"1 bundt",p:6},{n:"Kartofler",q:"700g",p:10},{n:"Smør",q:"40g",p:6},{n:"Hvidvin",q:"2 spsk",p:4},{n:"Kapers",q:"1 spsk",p:5}]},
+  {id:"torsk",n:"Torsk med sennepssauce",t:30,c:88,sy:["C"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Torskefilet",q:"4 stk",p:55},{n:"Kartofler",q:"700g",p:10},{n:"Dijonsennep",q:"2 spsk",p:5},{n:"Fuldkornssennep",q:"1 spsk",p:4},{n:"Fløde",q:"2 dl",p:14},{n:"Smør",q:"40g",p:6},{n:"Dild",q:"½ bundt",p:4},{n:"Citron",q:"1 stk",p:5}]},
+  {id:"fiskefrik",n:"Fiskefrikadeller med remoulade",t:30,c:72,sy:["C"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Fiskefars",q:"500g",p:38},{n:"Æg",q:"1 stk",p:3},{n:"Mel",q:"3 spsk",p:2},{n:"Løg",q:"1 stk",p:3},{n:"Dild",q:"½ bundt",p:4},{n:"Kartofler",q:"600g",p:9},{n:"Frosne ærter",q:"200g",p:7},{n:"Remoulade",q:"4 spsk",p:8}]},
+  {id:"padthai",n:"Pad thai med rejer",t:25,c:85,sy:["F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Risnudler",q:"200g",p:10},{n:"Pillede rejer",q:"300g",p:38},{n:"Æg",q:"2 stk",p:5},{n:"Bønnespirer",q:"100g",p:8},{n:"Tamarindpasta",q:"2 spsk",p:8},{n:"Fiskesauce",q:"2 spsk",p:4},{n:"Palmesukker",q:"1 spsk",p:3},{n:"Soyasauce",q:"1 spsk",p:2},{n:"Lime",q:"1 stk",p:4},{n:"Peanuts",q:"50g",p:8}]},
+  {id:"rejerwok",n:"Rejer wok med nudler",t:20,c:88,sy:["F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Pillede rejer",q:"400g",p:50},{n:"Æggenudler",q:"200g",p:10},{n:"Peberfrugt",q:"2 stk",p:10},{n:"Gulerødder",q:"2 stk",p:4},{n:"Hvidløg",q:"3 fed",p:2},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Soyasauce",q:"2 spsk",p:3},{n:"Østerssauce",q:"2 spsk",p:6},{n:"Sesamolie",q:"1 spsk",p:5},{n:"Lime",q:"1 stk",p:4}]},
+  {id:"frikadeller",n:"Frikadeller med kartoffelmos",t:35,c:68,sy:["D"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Hakket svinekød",q:"500g",p:30},{n:"Æg",q:"1 stk",p:3},{n:"Mel",q:"3 spsk",p:2},{n:"Mælk",q:"1 dl",p:3},{n:"Løg",q:"1 stk",p:3},{n:"Allehånde",q:"½ tsk",p:2},{n:"Kartofler",q:"800g",p:10},{n:"Smør",q:"60g",p:9},{n:"Rødkål",q:"200g",p:10}]},
+  {id:"kotelet",n:"Svinekoteletter med æbler",t:30,c:72,sy:["D"],mo:[7,8,9,10,11],i:[{n:"Svinekoteletter",q:"4 stk",p:38},{n:"Æbler",q:"3 stk",p:9},{n:"Løg",q:"2 stk",p:5},{n:"Kartofler",q:"700g",p:9},{n:"Smør",q:"40g",p:7},{n:"Fløde",q:"1 dl",p:7},{n:"Dijonsennep",q:"2 spsk",p:5}]},
+  {id:"mørbrad",n:"Svinemørbrad i flødesauce",t:30,c:88,sy:["D"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Svinemørbrad",q:"500g",p:45},{n:"Champignon",q:"300g",p:16},{n:"Fløde",q:"2 dl",p:14},{n:"Løg",q:"1 stk",p:3},{n:"Hvidløg",q:"2 fed",p:1},{n:"Hvidvin",q:"1 dl",p:8},{n:"Timian",q:"2 kviste",p:3},{n:"Kartofler",q:"700g",p:10}]},
+  {id:"tacos",n:"Tacos med hakket kød",t:25,c:82,sy:["B","D"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Hakket oksekød",q:"500g",p:38},{n:"Tacoskaller",q:"12 stk",p:16},{n:"Spidskommen",q:"1 tsk",p:2},{n:"Paprika",q:"1 tsk",p:2},{n:"Chilipulver",q:"½ tsk",p:1},{n:"Løg",q:"2 stk",p:5},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Avocado",q:"2 stk",p:14},{n:"Cheddar",q:"100g",p:10}]},
+  {id:"chili",n:"Chili con carne",t:35,c:75,sy:["B"],mo:[0,1,2,9,10,11],i:[{n:"Hakket oksekød",q:"500g",p:38},{n:"Kidneybønner",q:"2 dåser",p:14},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"3 fed",p:2},{n:"Chilipulver",q:"1 tsk",p:2},{n:"Røget paprika",q:"1 tsk",p:3},{n:"Mørk chokolade",q:"10g",p:3},{n:"Ris",q:"3 dl",p:8}]},
+  {id:"hakkebøf",n:"Hakkebøf med løg og sovs",t:30,c:72,sy:["B"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Hakket oksekød",q:"500g",p:38},{n:"Løg",q:"4 stk",p:8},{n:"Kartofler",q:"800g",p:10},{n:"Smør",q:"50g",p:8},{n:"Mel",q:"2 spsk",p:1},{n:"Oksebouillon",q:"4 dl",p:6},{n:"Soya",q:"1 spsk",p:2}]},
+  {id:"burger",n:"Burger med karamelliseret løg",t:30,c:88,sy:["B"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Hakkebøffer",q:"4 stk",p:44},{n:"Bacon",q:"8 skiver",p:18},{n:"Løg",q:"3 stk",p:7},{n:"Cheddar",q:"4 skiver",p:10},{n:"Burgerboller",q:"4 stk",p:16},{n:"Salat og tomat",q:"til burger",p:10}]},
+  {id:"medister",n:"Medisterpølse med persillesauce",t:30,c:65,sy:["D"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Medisterpølse",q:"600g",p:32},{n:"Kartofler",q:"800g",p:10},{n:"Smør",q:"50g",p:8},{n:"Mel",q:"3 spsk",p:2},{n:"Mælk",q:"4 dl",p:7},{n:"Persille",q:"1 håndfuld",p:4},{n:"Løg",q:"1 stk",p:3}]},
+  {id:"biksemad",n:"Biksemad med sprøde æg",t:25,c:55,sy:["D"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kartofler",q:"700g",p:9},{n:"Røget pølse",q:"300g",p:25},{n:"Løg",q:"2 stk",p:5},{n:"Æg",q:"4 stk",p:10},{n:"Smør",q:"30g",p:5},{n:"Worcestershiresauce",q:"1 spsk",p:4}]},
+  {id:"bollekarry",n:"Boller i karry",t:35,c:65,sy:["D"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Hakket svinekød",q:"500g",p:30},{n:"Æg",q:"1 stk",p:3},{n:"Mel",q:"2 spsk",p:1},{n:"Løg",q:"2 stk",p:5},{n:"Karrypulver",q:"1½ spsk",p:4},{n:"Mælk",q:"4 dl",p:7},{n:"Smør",q:"30g",p:5},{n:"Ris",q:"3 dl",p:8}]},
+  {id:"dahl",n:"Linse dahl med naan",t:30,c:52,sy:["F"],mo:[0,1,2,9,10,11],i:[{n:"Røde linser",q:"300g",p:14},{n:"Kokosmælk",q:"400ml",p:16},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"4 fed",p:2},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Gurkemeje",q:"1 tsk",p:2},{n:"Spinat",q:"200g",p:8},{n:"Naan-brød",q:"4 stk",p:14}]},
+  {id:"kikærte",n:"Marokkansk kikærtegryde",t:30,c:52,sy:["F"],mo:[0,1,2,9,10,11],i:[{n:"Kikærter",q:"2 dåser",p:14},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Kokosmælk",q:"200ml",p:9},{n:"Løg",q:"2 stk",p:5},{n:"Hvidløg",q:"3 fed",p:2},{n:"Gurkemeje",q:"1 tsk",p:2},{n:"Harissa",q:"1 tsk",p:4},{n:"Rosiner",q:"40g",p:5},{n:"Couscous",q:"300g",p:12}]},
+  {id:"pizza",n:"Hjemmelavet pizza",t:35,c:62,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Pizzabunde",q:"2 stk",p:20},{n:"Passata",q:"200ml",p:8},{n:"Mozzarella",q:"300g",p:20},{n:"Cherrytomater",q:"200g",p:10},{n:"Basilikum",q:"1 bundt",p:6},{n:"Hvidløg",q:"2 fed",p:1}]},
+  {id:"tærte",n:"Spinattærte med feta",t:40,c:62,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Butterdej",q:"1 pk",p:16},{n:"Frossen spinat",q:"300g",p:12},{n:"Fetaost",q:"200g",p:22},{n:"Æg",q:"3 stk",p:8},{n:"Fløde",q:"1 dl",p:7},{n:"Pinjekerner",q:"40g",p:12},{n:"Løg",q:"1 stk",p:3}]},
+  {id:"mexicansk",n:"Mexicansk risbowl",t:25,c:55,sy:["B"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Ris",q:"3 dl",p:8},{n:"Sorte bønner",q:"2 dåser",p:14},{n:"Avocado",q:"2 stk",p:14},{n:"Majs",q:"1 dåse",p:8},{n:"Cherrytomater",q:"200g",p:10},{n:"Lime",q:"2 stk",p:8},{n:"Creme fraiche",q:"2 dl",p:10}]},
+  {id:"pandekager",n:"Pandekager med skinke og ost",t:25,c:48,mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Mel",q:"150g",p:3},{n:"Æg",q:"2 stk",p:5},{n:"Mælk",q:"4 dl",p:6},{n:"Skinke",q:"100g",p:12},{n:"Ost, revet",q:"100g",p:10}]},
+  {id:"quesadilla",n:"Quesadilla med ost og bønner",t:15,c:44,mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Wraps",q:"6 stk",p:12},{n:"Ost, revet",q:"150g",p:14},{n:"Sorte bønner",q:"1 dåse",p:8},{n:"Creme fraiche",q:"3 spsk",p:4},{n:"Salsa",q:"3 spsk",p:6}]},
+  {id:"gyoza",n:"Gyoza med dipping sauce",t:30,c:72,sy:["F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Gyoza dej",q:"1 pk",p:18},{n:"Hakket svinekød",q:"300g",p:18},{n:"Spidskål",q:"¼ hoved",p:6},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Hvidløg",q:"2 fed",p:1},{n:"Soyasauce",q:"4 spsk",p:4},{n:"Riseddike",q:"2 spsk",p:5},{n:"Sesamolie",q:"1 spsk",p:5}]},
+  {id:"friedrice",n:"Stegte ris med kylling",t:25,c:65,sy:["A","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Jasminris",q:"3 dl",p:8},{n:"Kyllingebryst",q:"300g",p:25},{n:"Æg",q:"3 stk",p:8},{n:"Gulerødder",q:"2 stk",p:5},{n:"Frosne ærter",q:"150g",p:6},{n:"Soyasauce",q:"4 spsk",p:4},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Sesamolie",q:"1 spsk",p:5}]},
+  {id:"ramen",n:"Hjemmelavet ramen med æg",t:35,c:75,sy:["F"],mo:[0,1,2,9,10,11],i:[{n:"Ramenudler",q:"300g",p:14},{n:"Kyllingebouillon",q:"1,5 L",p:12},{n:"Æg",q:"4 stk",p:10},{n:"Bacon",q:"150g",p:18},{n:"Miso paste",q:"2 spsk",p:10},{n:"Soyasauce",q:"2 spsk",p:3},{n:"Ingefær",q:"1 spsk",p:3},{n:"Purløg",q:"1 bundt",p:5}]},
+  {id:"bibimbap",n:"Bibimbap med oksekød",t:30,c:82,sy:["B","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Ris",q:"3 dl",p:8},{n:"Hakket oksekød",q:"300g",p:24},{n:"Spinat",q:"150g",p:8},{n:"Gulerødder",q:"2 stk",p:4},{n:"Agurk",q:"1 stk",p:8},{n:"Æg",q:"4 stk",p:10},{n:"Gochujang paste",q:"2 spsk",p:10},{n:"Soyasauce",q:"2 spsk",p:3},{n:"Sesamolie",q:"1 spsk",p:5}]},
+  {id:"bulgogi",n:"Bulgogi oksekød med ris",t:25,c:85,sy:["B","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Oksekød i strimler",q:"500g",p:45},{n:"Soyasauce",q:"4 spsk",p:4},{n:"Sesamolie",q:"2 spsk",p:8},{n:"Hvidløg",q:"4 fed",p:2},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Æble eller pære",q:"½ stk",p:4},{n:"Sukker",q:"1 spsk",p:1},{n:"Ris",q:"3 dl",p:8}]},
+  {id:"gapao",n:"Gapao kylling med basilikum",t:20,c:68,sy:["A","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Thai basilikum",q:"1 håndfuld",p:6},{n:"Hvidløg",q:"4 fed",p:2},{n:"Chili",q:"2 stk",p:4},{n:"Fiskesauce",q:"2 spsk",p:4},{n:"Soyasauce",q:"1 spsk",p:2},{n:"Østerssauce",q:"1 spsk",p:4},{n:"Æg",q:"4 stk",p:10},{n:"Ris",q:"3 dl",p:8}]},
+  {id:"laksa",n:"Laksa med kylling og kokos",t:30,c:82,sy:["A","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"400g",p:32},{n:"Kokosmælk",q:"400ml",p:16},{n:"Laksa paste",q:"3 spsk",p:12},{n:"Risnudler",q:"200g",p:10},{n:"Bønnespirer",q:"100g",p:8},{n:"Lime",q:"1 stk",p:4},{n:"Fiskesauce",q:"1 spsk",p:4},{n:"Kyllingebouillon",q:"5 dl",p:6}]},
+  {id:"yakitori",n:"Yakitori kyllingespyd",t:25,c:72,sy:["A","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingelår (udbenet)",q:"600g",p:38},{n:"Soyasauce",q:"4 spsk",p:4},{n:"Mirin",q:"3 spsk",p:8},{n:"Sake",q:"2 spsk",p:5},{n:"Sukker",q:"1 spsk",p:1},{n:"Purløg",q:"2 stængler",p:4},{n:"Ris",q:"3 dl",p:8}]},
+  {id:"tonkatsu",n:"Tonkatsu svinekotelet med ris",t:30,c:75,sy:["D","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Svinekoteletter (uden ben)",q:"4 stk",p:38},{n:"Panko rasp",q:"100g",p:8},{n:"Æg",q:"2 stk",p:5},{n:"Mel",q:"50g",p:2},{n:"Worcestershiresauce",q:"3 spsk",p:4},{n:"Ketchup",q:"2 spsk",p:3},{n:"Ris",q:"3 dl",p:8},{n:"Hvidkål",q:"¼ hoved",p:5}]},
+  {id:"mabodofu",n:"Japansk karry med ris",t:30,c:62,sy:["F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Japansk curry roux",q:"½ pk",p:14},{n:"Kartofler",q:"400g",p:6},{n:"Gulerødder",q:"2 stk",p:4},{n:"Løg",q:"2 stk",p:5},{n:"Kyllingebryst",q:"300g",p:25},{n:"Ris",q:"3 dl",p:8}]},
+  {id:"kimchipasta",n:"Kimchi pasta med bacon",t:20,c:65,sy:["E","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Spaghetti",q:"400g",p:12},{n:"Kimchi",q:"200g",p:18},{n:"Bacon",q:"150g",p:18},{n:"Smør",q:"30g",p:5},{n:"Hvidløg",q:"2 fed",p:1},{n:"Soyasauce",q:"1 spsk",p:2},{n:"Sesamolie",q:"1 spsk",p:5},{n:"Parmesan",q:"40g",p:8}]},
+  {id:"thainudler",n:"Thai nudler med grøntsager",t:20,c:55,sy:["F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Risnudler",q:"300g",p:12},{n:"Peberfrugt",q:"2 stk",p:10},{n:"Broccoli",q:"1 hoved",p:14},{n:"Soyasauce",q:"3 spsk",p:4},{n:"Østerssauce",q:"2 spsk",p:6},{n:"Ingefær",q:"1 spsk",p:3},{n:"Lime",q:"1 stk",p:4},{n:"Peanuts",q:"40g",p:6}]},
+  {id:"banh",n:"Banh mi sandwich",t:25,c:72,sy:["F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Flutes",q:"2 stk",p:14},{n:"Svinekød i strimler",q:"400g",p:28},{n:"Hoisinsauce",q:"3 spsk",p:8},{n:"Gulerødder",q:"2 stk",p:4},{n:"Agurk",q:"1 stk",p:8},{n:"Riseddike",q:"2 spsk",p:5},{n:"Koriander",q:"lidt",p:4},{n:"Mayonnaise",q:"3 spsk",p:6}]},
+  {id:"hotdog",n:"Gourmet hotdog",t:20,c:55,sy:["D"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Pølser",q:"8 stk",p:28},{n:"Hotdogbrød",q:"8 stk",p:16},{n:"Mayonnaise",q:"3 spsk",p:6},{n:"Agurk",q:"1 stk",p:8},{n:"Sennep",q:"2 spsk",p:4},{n:"Ketchup",q:"efter smag",p:4},{n:"Ristet løg",q:"til servering",p:5}]},
+  {id:"fiskefilet",n:"Sprøde fiskefileter med kartofler",t:25,c:65,sy:["C"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Fiskefileter",q:"4 stk",p:38},{n:"Panko rasp",q:"80g",p:8},{n:"Æg",q:"1 stk",p:3},{n:"Mel",q:"40g",p:2},{n:"Kartofler",q:"700g",p:9},{n:"Remoulade",q:"4 spsk",p:8},{n:"Citron",q:"1 stk",p:4}]},
+  {id:"schnitzels",n:"Wiener schnitzel med kartoffelsalat",t:25,c:75,sy:["D"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Svineschnitzel",q:"4 stk",p:40},{n:"Panko rasp",q:"80g",p:8},{n:"Æg",q:"2 stk",p:5},{n:"Mel",q:"40g",p:2},{n:"Kartofler",q:"700g",p:9},{n:"Mayonnaise",q:"3 spsk",p:6},{n:"Purløg",q:"1 bundt",p:5},{n:"Citron",q:"1 stk",p:4}]},
+  {id:"nachos",n:"Loaded nachos med kylling",t:25,c:78,sy:["A"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Nachos",q:"1 stor pk",p:18},{n:"Kyllingebryst",q:"300g",p:25},{n:"Cheddar, revet",q:"150g",p:14},{n:"Salsa",q:"4 spsk",p:8},{n:"Guacamole",q:"200g",p:16},{n:"Creme fraiche",q:"1 dl",p:6}]},
+  {id:"tortillapizza",n:"Tortilla-pizza med mozzarella",t:15,c:52,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Wraps/tortillas",q:"4 stk",p:10},{n:"Passata",q:"150ml",p:6},{n:"Mozzarella",q:"200g",p:16},{n:"Cherrytomater",q:"150g",p:8},{n:"Skinke",q:"100g",p:12},{n:"Oregano",q:"1 tsk",p:2}]},
+  {id:"nudelwok",n:"Simpel wok med nudler",t:20,c:52,sy:["F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Æggenudler",q:"300g",p:12},{n:"Gulerødder",q:"2 stk",p:4},{n:"Majs",q:"1 dåse",p:8},{n:"Ærter",q:"100g",p:5},{n:"Soyasauce",q:"3 spsk",p:3},{n:"Sesamolie",q:"1 spsk",p:5},{n:"Æg",q:"2 stk",p:5}]},
+  {id:"kyllingnuggets",n:"Hjemmelavede kyllingnuggets",t:25,c:65,sy:["A"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Panko rasp",q:"100g",p:8},{n:"Æg",q:"2 stk",p:5},{n:"Mel",q:"50g",p:2},{n:"Paprika",q:"1 tsk",p:2},{n:"Kartofler",q:"600g",p:9},{n:"Ketchup eller aioli",q:"dip",p:6}]},
+  {id:"wrapskinke",n:"Wraps med kylling, ost og majs",t:15,c:52,sy:["A"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Wraps",q:"6 stk",p:12},{n:"Kyllingebryst (stegt)",q:"300g",p:25},{n:"Cheddar, revet",q:"100g",p:10},{n:"Majs",q:"1 dåse",p:8},{n:"Salatblade",q:"1 pose",p:8},{n:"Creme fraiche",q:"3 spsk",p:5}]},
+  // ── ITALIENSK (nye) ─────────────────────────────────────────────────────
+  {id:"ossobuco",n:"Ossobuco med gremolata",t:45,c:115,sy:["B"],mo:[0,1,2,9,10,11],i:[{n:"Kalveskank",q:"4 skiver",p:72},{n:"Løg",q:"2 stk",p:5},{n:"Gulerødder",q:"2 stk",p:4},{n:"Selleri",q:"2 stængler",p:4},{n:"Hvidvin",q:"2 dl",p:10},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Hvidløg",q:"3 fed",p:2},{n:"Citron",q:"1 stk",p:5},{n:"Persille",q:"1 håndfuld",p:4},{n:"Risottoris",q:"300g",p:14}]},
+  {id:"saltimbocca",n:"Saltimbocca med kartofler",t:25,c:92,sy:["D"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kalve- eller svineschnitzler",q:"4 stk",p:48},{n:"Parmaskinkeskiver",q:"8 stk",p:22},{n:"Frisk salvie",q:"8 blade",p:5},{n:"Hvidvin",q:"1 dl",p:6},{n:"Smør",q:"40g",p:6},{n:"Kartofler",q:"700g",p:9}]},
+  {id:"cacciatora",n:"Kylling alla cacciatora",t:45,c:82,sy:["A","E"],mo:[0,1,2,9,10,11],i:[{n:"Kyllingelår",q:"4 stk",p:38},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Oliven",q:"80g",p:10},{n:"Kapers",q:"1 spsk",p:5},{n:"Hvidvin",q:"1 dl",p:6},{n:"Løg",q:"1 stk",p:3},{n:"Hvidløg",q:"3 fed",p:2},{n:"Rosmarin",q:"2 kviste",p:3},{n:"Brød",q:"4 skiver",p:8}]},
+  {id:"trufflepasta",n:"Pasta med svampe og trøffelolie",t:25,c:72,sy:["E"],mo:[0,1,2,9,10,11],i:[{n:"Tagliatelle",q:"400g",p:14},{n:"Blandede svampe",q:"400g",p:22},{n:"Hvidløg",q:"3 fed",p:2},{n:"Fløde",q:"1 dl",p:7},{n:"Parmesan",q:"50g",p:10},{n:"Trøffelolie",q:"1 spsk",p:12},{n:"Persille",q:"1 håndfuld",p:4}]},
+  {id:"amatriciana",n:"Pasta all'amatriciana",t:25,c:68,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Rigatoni",q:"400g",p:12},{n:"Guanciale eller bacon",q:"200g",p:22},{n:"Hakkede tomater",q:"1 dåse",p:8},{n:"Pecorino",q:"60g",p:14},{n:"Chiliflager",q:"½ tsk",p:1},{n:"Hvidvin",q:"½ dl",p:4}]},
+  {id:"caprese",n:"Kylling caprese med mozzarella",t:25,c:82,sy:["A","E"],mo:[4,5,6,7,8,9],i:[{n:"Kyllingebryst",q:"4 stk",p:38},{n:"Mozzarella",q:"250g",p:18},{n:"Cherrytomater",q:"300g",p:12},{n:"Basilikum",q:"1 bundt",p:6},{n:"Balsamico",q:"2 spsk",p:6},{n:"Olivenolie",q:"2 spsk",p:4},{n:"Kartofler",q:"600g",p:9}]},
+  {id:"supplì",n:"Sprøde risboller med mozzarella",t:35,c:65,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Risottoris",q:"250g",p:12},{n:"Mozzarella",q:"150g",p:12},{n:"Parmesan",q:"40g",p:8},{n:"Æg",q:"2 stk",p:5},{n:"Rasp",q:"100g",p:6},{n:"Grøntsagsbouillon",q:"6 dl",p:6},{n:"Tomatsauce",q:"til dip",p:8}]},
+  {id:"gnocchisauce",n:"Gnocchi med pesto og cherrytomater",t:20,c:58,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Gnocchi",q:"500g",p:18},{n:"Grøn pesto",q:"4 spsk",p:14},{n:"Cherrytomater",q:"300g",p:12},{n:"Parmesan",q:"40g",p:8},{n:"Pinjekerner",q:"30g",p:10},{n:"Smør",q:"20g",p:4}]},
+  // ── HVERDAGSKLASSIKERE (nye) ────────────────────────────────────────────
+  {id:"koteletsennep",n:"Koteletter med sennepssauce og ris",t:25,c:72,sy:["D"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Svinekoteletter",q:"4 stk",p:38},{n:"Dijonsennep",q:"3 spsk",p:6},{n:"Fløde",q:"2 dl",p:14},{n:"Hvidløg",q:"2 fed",p:1},{n:"Timian",q:"2 kviste",p:3},{n:"Ris",q:"3 dl",p:8}]},
+  {id:"forloren2",n:"Forloren hare med kartofler og rødkål",t:45,c:68,sy:["D"],mo:[0,1,2,9,10,11],i:[{n:"Blandet hakket kød",q:"600g",p:38},{n:"Æg",q:"2 stk",p:5},{n:"Mel",q:"3 spsk",p:2},{n:"Bacon",q:"100g",p:12},{n:"Kartofler",q:"800g",p:10},{n:"Rødkål",q:"200g",p:10},{n:"Oksebouillon",q:"3 dl",p:5}]},
+  {id:"oksesteg",n:"Oksesteg med rødvinssauce",t:45,c:118,sy:["B"],mo:[0,1,2,9,10,11],i:[{n:"Oksesteg",q:"800g",p:78},{n:"Rødvin",q:"2 dl",p:12},{n:"Oksebouillon",q:"3 dl",p:6},{n:"Løg",q:"2 stk",p:5},{n:"Gulerødder",q:"3 stk",p:6},{n:"Kartofler",q:"800g",p:10},{n:"Tomatpuré",q:"1 spsk",p:2},{n:"Timian",q:"3 kviste",p:3}]},
+  {id:"lammekotelet",n:"Lammekoteletter med mynte og kartofler",t:25,c:108,mo:[2,3,4,5],i:[{n:"Lammekoteletter",q:"8 stk",p:68},{n:"Frisk mynte",q:"1 håndfuld",p:5},{n:"Hvidløg",q:"3 fed",p:2},{n:"Citron",q:"1 stk",p:5},{n:"Kartofler",q:"700g",p:9},{n:"Yoghurtsauce",q:"150g",p:8}]},
+  {id:"kyllingporre",n:"Kylling med porre og fløde",t:30,c:78,sy:["A"],mo:[0,1,2,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Porre",q:"3 stk",p:12},{n:"Fløde",q:"2 dl",p:14},{n:"Hvidvin",q:"1 dl",p:6},{n:"Hvidløg",q:"2 fed",p:1},{n:"Dijonsennep",q:"1 spsk",p:3},{n:"Kartofler",q:"700g",p:10}]},
+  {id:"fiskovn",n:"Ovnbagt fisk med citronsauce",t:25,c:88,sy:["C"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Hvid fisk (torsk eller tilapia)",q:"4 fileter",p:52},{n:"Citron",q:"2 stk",p:8},{n:"Smør",q:"50g",p:8},{n:"Kapers",q:"1 spsk",p:5},{n:"Hvidløg",q:"2 fed",p:1},{n:"Persille",q:"1 håndfuld",p:4},{n:"Kartofler",q:"700g",p:10}]},
+  {id:"svinerevben",n:"Revben med coleslaw og kartoffelbåde",t:45,c:85,sy:["D"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Svineribs",q:"1 kg",p:48},{n:"BBQ-sauce",q:"6 spsk",p:12},{n:"Paprika",q:"1 tsk",p:2},{n:"Spidskommen",q:"1 tsk",p:2},{n:"Kartofler",q:"600g",p:9},{n:"Spidskål",q:"¼ hoved",p:6},{n:"Mayonnaise",q:"3 spsk",p:6}]},
+  // ── BØRNEVENLIGE (nye) ──────────────────────────────────────────────────
+  {id:"fiskpinde",n:"Hjemmelavede fiskepinde med kartofler",t:30,c:65,sy:["C"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Torskefilet",q:"500g",p:38},{n:"Panko rasp",q:"100g",p:8},{n:"Æg",q:"2 stk",p:5},{n:"Mel",q:"50g",p:2},{n:"Kartofler",q:"700g",p:9},{n:"Ærter",q:"150g",p:6},{n:"Remoulade",q:"4 spsk",p:8}]},
+  {id:"spagsmiley2",n:"Mini pizza med skinke og ost",t:20,c:55,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Pizzabunde (mini)",q:"4 stk",p:16},{n:"Passata",q:"150ml",p:6},{n:"Mozzarella",q:"200g",p:16},{n:"Skinke",q:"100g",p:12},{n:"Majs",q:"½ dåse",p:5},{n:"Oregano",q:"1 tsk",p:2}]},
+  {id:"pastabolle",n:"Pasta med smør og parmesan",t:15,c:32,sy:["E"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Spaghetti",q:"400g",p:12},{n:"Smør",q:"60g",p:9},{n:"Parmesan",q:"60g",p:12},{n:"Hvidløg",q:"2 fed",p:2},{n:"Sort peber",q:"lidt",p:1}]},
+  {id:"kyllnuggets2",n:"Kylling i panko med søde kartoffelbåde",t:30,c:72,sy:["A"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Kyllingebryst",q:"500g",p:35},{n:"Panko rasp",q:"100g",p:8},{n:"Æg",q:"2 stk",p:5},{n:"Mel",q:"50g",p:2},{n:"Søbatats",q:"2 stk",p:14},{n:"Ketchup",q:"til dip",p:4}]},
+  {id:"ostetoast",n:"Fransk toast med ost og skinke",t:15,c:42,mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Franskbrød",q:"8 skiver",p:8},{n:"Ost, revet",q:"150g",p:14},{n:"Skinke",q:"100g",p:12},{n:"Æg",q:"2 stk",p:5},{n:"Mælk",q:"1 dl",p:3},{n:"Smør",q:"30g",p:5}]},
+  // ── ASIATISK (nye) ──────────────────────────────────────────────────────
+  {id:"tantanmen",n:"Dan dan nudler med svinekød",t:30,c:72,sy:["D","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Æggenudler",q:"300g",p:12},{n:"Hakket svinekød",q:"300g",p:18},{n:"Tahini",q:"3 spsk",p:10},{n:"Soyasauce",q:"3 spsk",p:3},{n:"Chiliflager",q:"1 tsk",p:2},{n:"Hvidløg",q:"3 fed",p:2},{n:"Ingefær",q:"1 spsk",p:3},{n:"Kyllingebouillon",q:"4 dl",p:5},{n:"Purløg",q:"1 bundt",p:5}]},
+  {id:"okonomiyaki",n:"Okonomiyaki japansk pandekage",t:30,c:65,sy:["F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Hvidkål",q:"¼ hoved",p:6},{n:"Mel",q:"150g",p:3},{n:"Æg",q:"3 stk",p:8},{n:"Bacon",q:"150g",p:18},{n:"Mayonnaise",q:"3 spsk",p:6},{n:"Worcestershiresauce",q:"2 spsk",p:4},{n:"Bonito flakes",q:"drys",p:8},{n:"Purløg",q:"1 bundt",p:5}]},
+  {id:"mapo",n:"Mapo tofu med ris",t:25,c:65,sy:["F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Fast tofu",q:"400g",p:20},{n:"Hakket svinekød",q:"200g",p:12},{n:"Doubanjiang paste",q:"2 spsk",p:10},{n:"Soyasauce",q:"2 spsk",p:3},{n:"Hvidløg",q:"3 fed",p:2},{n:"Ingefær",q:"1 spsk revet",p:3},{n:"Sesamolie",q:"1 spsk",p:5},{n:"Ris",q:"3 dl",p:8},{n:"Purløg",q:"1 bundt",p:5}]},
+  {id:"vietnamesisk",n:"Vietnamesisk bun bowl med rejer",t:25,c:88,sy:["F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Pillede rejer",q:"350g",p:45},{n:"Glasnudler",q:"200g",p:10},{n:"Agurk",q:"1 stk",p:8},{n:"Gulerødder",q:"2 stk",p:4},{n:"Salatblade",q:"1 pose",p:8},{n:"Fiskesauce",q:"3 spsk",p:5},{n:"Lime",q:"2 stk",p:7},{n:"Sukker",q:"1 spsk",p:1},{n:"Mynteblade",q:"lidt",p:4}]},
+  {id:"koreanskbowl",n:"Koreansk oksekødsbowl med kimchi",t:25,c:88,sy:["B","F"],mo:[0,1,2,3,4,5,6,7,8,9,10,11],i:[{n:"Oksekød i strimler",q:"400g",p:40},{n:"Kimchi",q:"150g",p:14},{n:"Ris",q:"3 dl",p:8},{n:"Soyasauce",q:"3 spsk",p:3},{n:"Sesamolie",q:"1 spsk",p:5},{n:"Hvidløg",q:"3 fed",p:2},{n:"Sukker",q:"1 tsk",p:1},{n:"Agurk",q:"1 stk",p:8},{n:"Sesamfrø",q:"1 spsk",p:3}]}
 ];
 
-const STORES={
-  'Ingen':['Kød & fisk','Grøntsager','Mejeri & æg','Tørvarer','Brød & bagt','Sauce & krydderier','Andet'],
-  'Netto':['Grøntsager','Kød & fisk','Mejeri & æg','Brød & bagt','Tørvarer','Sauce & krydderier','Andet'],
-  'Rema 1000':['Grøntsager','Kød & fisk','Mejeri & æg','Tørvarer','Brød & bagt','Sauce & krydderier','Andet'],
-  'Føtex':['Kød & fisk','Grøntsager','Mejeri & æg','Brød & bagt','Sauce & krydderier','Tørvarer','Andet'],
-  'Lidl':['Grøntsager','Kød & fisk','Tørvarer','Mejeri & æg','Brød & bagt','Sauce & krydderier','Andet']
+var STEPS = {
+  bolognese:["Hak løg, hvidløg, gulerødder og selleri fint. Svits i olie 5 min.","Tilsæt hakket kød og brun grundigt — rør ikke for meget.","Rør tomatpuré i og steg 2 min. Deglacér med rødvin og lad fordampe.","Hæld passata i, krydr med salt, peber og sukker. Simre 15 min.","Kog spaghetti. Gem 1 dl kogevand. Bland pasta med sauce.","Riv parmesan over og server."],
+  carbonara:["Kog spaghetti — gem 2 dl kogevand.","Steg guanciale/bacon til fedtet smelter og det er let sprødt.","Pisk æg, æggeblommer og ost. Krydr generøst med sort peber.","Tag panden af varmen. Vend pasta i og tilsæt æg-blandingen.","Rør hurtigt — tilsæt kogevand lidt ad gangen til silkeblød sauce.","Server straks med ekstra ost og peber."],
+  arrabiata:["Skær chorizo og steg sprøde. Tag ud — behold fedtet.","Svits hvidløg og chiliflager 1 min. Rør tomatpuré i.","Tilsæt tomater og simre 12 min.","Kog penne. Gem lidt kogevand.","Bland pasta med sauce, chorizo og lidt kogevand.","Top med basilikum og parmesan."],
+  laksepasta:["Kog pasta — gem kogevand.","Skær laks i tern og steg i smør 2-3 min — stadig lyserød indeni.","Svits hvidløg 1 min. Deglacér med hvidvin og lad fordampe.","Tilsæt fløde og kapers. Kog 2 min til let tyknet.","Vend pasta i saucen med lidt kogevand.","Top med dild og citronsaft."],
+  pestokylling:["Kog pasta — gem kogevand.","Rist pinjekerner på tør pande til gyldne.","Krydr kylling og steg i tern 5-6 min med hvidløg og cherrytomater.","Bland varm pasta med pesto og lidt kogevand.","Vend kylling og soltørrede tomater i.","Top med parmesan og pinjekerner."],
+  aglio:["Kog spaghetti — gem 2 dl kogevand.","Skær hvidløg i tynde skiver. Varm olivenolie ved lav varme.","Tilsæt hvidløg og chiliflager langsomt til gylden — ikke brun.","Tilsæt pasta og kogevand — rør til emulgeret sauce.","Smag til med salt. Tilsæt persille.","Server med parmesan."],
+  rejerlingine:["Kog pasta — gem kogevand.","Svits hvidløg og chili i smør og olie 1 min.","Tilsæt rejer og steg 2 min til lyserøde.","Deglacér med hvidvin og lad fordampe.","Vend pasta i med lidt kogevand.","Klem citron over og top med persille."],
+  lasagne:["Forvarm ovn til 200°C. Skær grøntsager i tern og steg 8 min.","Lav bechamel: smelt smør, rør mel i, tilsæt mælk lidt ad gangen.","Skift lag: passata med grøntsager — plader — bechamel.","Gentag. Slut med bechamel og parmesan.","Bag 30-35 min til gylden og bobler."],
+  mac:["Kog macaroni. Steg bacon sprødt.","Smelt smør, rør mel i og kog 2 min. Tilsæt mælk under omrøring.","Smelt cheddar i saucen. Rør sennep i.","Bland pasta og bacon i saucen.","Server straks eller drys rasp over og gratiner 10 min."],
+  risotto:["Varm bouillon — hold varm.","Svits løg og hvidløg i smør 3 min. Tilsæt champignon 4 min.","Tilsæt ris og rør 2 min. Hæld vin i og lad absorbere.","Tilsæt bouillon én grydske ad gangen under omrøring, 18-20 min.","Rør koldt smør og parmesan i. Hvil 2 min."],
+  kødboller:["Bland kød med æg, rasp, salt og peber. Form boller.","Brun boller 6 min. Tag ud.","Svits hvidløg og tilsæt tomater. Simre 10 min.","Kom kødboller tilbage og simre 8 min.","Kog spaghetti. Server med basilikum og parmesan."],
+  kyllrodfrugt:["Forvarm ovn til 210°C.","Halver kartofler, skær gulerødder og løg groft. Læg i fad med olie og hvidvin.","Krydr kyllingelår og læg ovenpå med timian og hvidløg.","Pres citron over og bag 35-40 min.","Hvil 5 min inden servering."],
+  tikka:["Mariner kylling i yoghurt og halvdelen af paste 10 min. Kog ris.","Svits løg 5 min. Tilsæt hvidløg og ingefær 1 min.","Tilsæt paste og steg 2 min.","Tilsæt kylling og brun 4-5 min. Tilsæt tomater og kokosmælk.","Simre 15 min. Server over ris."],
+  wokbroccoli:["Kog ris. Rist cashewnødder på tør pande.","Bland soya, østerssauce, ingefær og hvidløg til sauce.","Wok kylling ved høj varme 3-4 min.","Tilsæt broccoli og wok 3 min.","Hæld sauce over, tilsæt sesamolie og cashews. Server over ris."],
+  teriyaki:["Bland soya, mirin, sake og sukker til teriyakisauce.","Kog ris med edamame de sidste 5 min.","Steg kylling ved høj varme 4 min til gylden.","Hæld sauce over og lad karamellisere 1-2 min.","Anret over ris med agurk og sesamfrø."],
+  thaigron:["Kog ris. Svits karrypaste 1-2 min til duften blomstrer.","Tilsæt kylling i tern og steg 4 min.","Hæld kokosmælk i. Tilsæt fiskesauce, palmesukker og bambusskud.","Simre 12 min. Tilsæt peberfrugt de sidste 3 min.","Smag til med lime. Server over ris."],
+  honningsennep:["Forvarm ovn til 200°C. Rør honning, begge sennep og hvidløg til glasur.","Halver kartofler i fad med olie og krydr.","Gnid glasur ind i kyllingen og læg ovenpå kartofler med timian.","Bag 30-35 min. Hvil 5 min."],
+  satay:["Kog ris. Skær kylling i strimler og mariner i soya og hvidløg.","Træk på spyd og steg 5-6 min.","Rør peanutbutter, kokosmælk, fiskesauce, palmesukker og lime til sauce — varm forsigtigt.","Server med ris og sataysauce."],
+  burrito:["Kog ris. Krydr kylling og steg i tern 5-6 min.","Varm bønner med spidskommen.","Varm wraps 30 sek i mikroovn.","Fordel ris, bønner, kylling og ost. Tilsæt salsa og fold.","Grill evt. 1 min i tør pande."],
+  pita:["Krydr kylling med paprika og oregano. Steg 5-6 min per side. Hvil 3 min.","Snit rødløg fint og halvér tomater.","Varm pitabrød og åbn forsigtigt.","Smør tzatziki indeni og fyld med salat, kylling, løg og tomater."],
+  fajitas:["Skær kylling og peberfrugt i strimler, løg i halve ringe.","Krydr kylling og steg 4 min. Tilsæt løg og peberfrugt 3 min.","Mos avocado med lime og salt.","Server til selvsamling med guacamole og creme fraiche."],
+  pulled:["Kog kylling i bouillon med løg 20 min.","Riv i strimler og bland med BBQ-sauce.","Snit kål og riv gulerødder. Bland med mayo og eddike til coleslaw.","Rist briocheboller i smør. Byg burgere."],
+  laksgrill:["Forvarm ovn til 200°C. Kog kartofler 15 min.","Læg laks på folie med smør, citronskiver, dild og kapers.","Dryp hvidvin over og fold foliepakkerne tæt.","Bag 15-18 min. Server med kartofler."],
+  torsk:["Kog kartofler 18 min. Tør torsken og krydr.","Steg i smør 3-4 min per side. Tag ud.","Hæld fløde i panden. Lad reducere 2 min.","Rør begge sennep og kapers i. Smag til. Server med dild."],
+  fiskefrik:["Kog kartofler 18 min. Hak løg og dild.","Bland fiskefars med æg, mel, løg og dild. Krydr.","Form frikadeller og steg i smør 3-4 min per side.","Server med kartofler, ærter og remoulade."],
+  padthai:["Udblød risnudler i koldt vand 30 min eller kogende vand 5 min.","Bland tamarind, fiskesauce, palmesukker og soya til sauce.","Steg rejer 2 min. Skub til side og scramble æg.","Tilsæt nudler og sauce. Wok 2 min. Vend bønnespirer i.","Anret med peanuts og limebåde."],
+  rejerwok:["Kog nudler 4 min. Dræn og skyl koldt.","Wok grøntsager med ingefær og hvidløg 3 min.","Tilsæt rejer og wok 2 min.","Tilsæt nudler, soya, østerssauce og sesamolie. Rør 1 min.","Klem lime over og server straks."],
+  frikadeller:["Kog kartofler 20 min. Hak løg fint.","Bland kød, æg, mel, mælk, løg og allehånde. Krydr.","Form frikadeller og steg 4-5 min per side.","Mos kartofler med smør og mælk. Server med rødkål."],
+  kotelet:["Kog kartofler. Skær æbler og kog med smør og sukker 8 min.","Krydr koteletter og steg 4 min per side. Hvil 3 min.","Svits løg 5 min. Tilsæt sennep og fløde — kog 2 min.","Server med løgsauce, æblekompot og kartofler."],
+  mørbrad:["Kog kartofler. Skær mørbrad i medallioner og steg 3 min per side. Tag ud.","Steg løg, hvidløg og champignon 5 min.","Deglacér med hvidvin. Tilsæt fløde og simre 4 min.","Kom kød tilbage og varm 2 min."],
+  tacos:["Brun løg og hvidløg. Tilsæt kød og brun grundigt.","Rør krydderier i og steg 1 min. Tilsæt tomater og simre 8 min.","Mos avocado med salt og citron.","Varm tacoskaller 4 min i ovnen. Server til selvsamling."],
+  chili:["Svits løg og hvidløg. Tilsæt kød og brun 6 min.","Rør krydderier i og steg 1 min.","Tilsæt tomater og bønner. Simre 20 min.","Rør mørk chokolade i — runder chilien af. Kog ris. Server."],
+  hakkebøf:["Kog kartofler. Steg løgringe i smør 15 min til bløde og gyldne.","Form bøffer og steg 3-4 min per side. Hold varm.","Rør mel i panden, tilsæt bouillon og soya. Simre 5 min til sovs.","Server med karamelliserede løg, sovs og kartofler."],
+  burger:["Steg løg i smør ved lav varme 15 min. Steg bacon sprødt.","Krydr bøffer og steg 3-4 min per side. Læg ost på de sidste 1 min.","Rist boller. Saml burger med karamelliserede løg og bacon."],
+  medister:["Kog kartofler. Steg medisterpølse 10-12 min — vend jævnligt.","Svits løg i smør, rør mel i og kog 2 min.","Tilsæt mælk under omrøring til jævn sauce. Rør persille i.","Server med kartofler."],
+  biksemad:["Kog kartofler 10 min og skær i tern.","Steg løg gyldne. Tilsæt kartofler og pølse.","Steg ved høj varme 10-12 min — rør sjældent.","Tilsæt worcestershiresauce. Steg spejlæg. Server."],
+  bollekarry:["Kog ris. Bland kød med æg og mel. Form boller og brun 5 min.","Svits løg og karry 3 min. Rør mel i.","Tilsæt mælk til jævn sauce. Kom boller tilbage og simre 10 min."],
+  dahl:["Svits løg, hvidløg og ingefær 5 min. Tilsæt krydderier 1 min.","Tilsæt linser, tomater og kokosmælk. Simre 20 min.","Rør spinat i. Smag til med salt og lime.","Varm naan. Server med yoghurt."],
+  kikærte:["Svits løg og hvidløg 4 min. Tilsæt krydderier og harissa 1 min.","Tilsæt tomater, kokosmælk, kikærter og rosiner. Simre 15 min.","Hæld kogende bouillon over couscous — dæk 5 min.","Smag til og server over couscous."],
+  pizza:["Forvarm ovn til 250°C. Bland passata med hvidløg og oregano.","Smør sauce på bundene. Fordel mozzarella og tomater.","Bag 8-12 min til gylden. Top med basilikum."],
+  tærte:["Forvarm ovn til 200°C. Optø spinat og klem al væske ud.","Svits løg og hvidløg 3 min. Bland med spinat.","Pisk æg og fløde. Smudr feta i og bland med spinat.","Rul dej i tærteform. Drys pinjekerner over. Bag 25-28 min."],
+  mexicansk:["Kog ris. Svits løg og tilsæt bønner og majs med tacokrydderi.","Simre 5 min. Mos avocado med lime til guacamole.","Anret ris med bønner, tomater og guacamole. Top med creme fraiche."],
+  pandekager:["Pisk mel, æg og mælk til jævn dej. Lad hvile 10 min.","Steg tynde pandekager i smør.","Fyld med skinke og revet ost. Fold og server straks."],
+  quesadilla:["Bland bønner med krydderi. Fordel bønner og ost på halvdelen af wrap. Fold.","Steg på tør pande 2 min per side til gylden.","Skær i trekanter. Server med creme fraiche og salsa."],
+  gyoza:["Bland hakket kød, finthakket kål, ingefær og hvidløg. Krydr med soya og sesamolie.","Læg fyld på gyoza-skin. Fugt kanten og fold tæt.","Steg i oliefilm 2 min til gylden bund. Tilsæt ½ dl vand og dæk til 4 min.","Rør soya, riseddike og sesamolie til dipping sauce."],
+  friedrice:["Kog ris dagen før — kolde ris steger bedst.","Steg kylling i tern 4-5 min. Steg gulerødder med ingefær 3 min.","Skub til side og scramble æg i midten.","Tilsæt ris, ærter og kylling. Rør ved høj varme 3 min. Hæld soya og sesamolie over."],
+  ramen:["Kog æg 7 min til bløde. Pil og mariner i soya og vand 10 min.","Varm bouillon med ingefær og hvidløg. Rør miso og soya i.","Kog nudler. Steg bacon sprødt.","Anret nudler i bouillon med halverede æg, bacon og purløg."],
+  bibimbap:["Kog ris. Brun hakket kød med soya og sesamolie 4 min.","Steg spinat 2 min. Steg gulerødder 2 min. Skær agurk.","Steg spejlæg.","Anret ris med alle toppings og gochujang. Bland ved bordet."],
+  bulgogi:["Bland soya, sesamolie, hvidløg, ingefær, sukker og revet æble til marinade.","Mariner oksekød mindst 15 min.","Steg ved høj varme 3-4 min til karamelliseret.","Kog ris. Server med salat og agurk."],
+  gapao:["Kog ris. Hak hvidløg og chili og steg 1 min.","Tilsæt kylling og steg 4-5 min. Rør fiskesauce, soya og østerssauce i.","Tag af varmen og rør thai basilikum i.","Steg spejlæg med sprøde kanter. Server over ris med æg på toppen."],
+  laksa:["Udblød risnudler 5 min. Steg laksa paste 2 min.","Tilsæt bouillon og kokosmælk. Kog op.","Tilsæt kylling og kog 12 min. Smag til med fiskesauce og lime.","Anret nudler i skåle, hæld laksa over og top med bønnespirer."],
+  yakitori:["Bland soya, mirin, sake og sukker. Kog ind til glasur.","Skær kylling og træk på spyd skiftevis med purløg.","Grill 5-6 min. Pensl med glasur de sidste 2 min.","Kog ris. Server med ekstra glasur."],
+  tonkatsu:["Bank schnitzel flad. Krydr. Vend i mel, æg og panko.","Steg i rigeligt olie 3-4 min per side til dybt gylden.","Rør worcestershiresauce og ketchup til tonkatsu-sauce.","Server med ris og finthakket kål."],
+  mabodofu:["Skær kartofler og gulerødder. Steg kylling i tern 4 min.","Tilsæt løg og gulerødder 3 min. Tilsæt kartofler og vand. Kog 12 min.","Bræk curry roux i stykker og rør i. Simre 5 min.","Kog ris. Server curry over ris."],
+  kimchipasta:["Kog spaghetti. Steg bacon sprødt.","Hak kimchi groft og steg 3 min i baconsfedt. Tilsæt hvidløg og smør.","Bland pasta, kimchi og kogevand. Rør soya og sesamolie i.","Top med parmesan og bacon."],
+  thainudler:["Udblød risnudler 15 min. Skær grøntsager i strimler.","Wok grøntsager ved høj varme 3 min. Tilsæt nudler og steg 2 min.","Tilsæt soya, østerssauce og ingefær. Smag til med lime.","Anret med peanuts."],
+  banh:["Skær gulerødder i julienne. Bland med riseddike og sukker — sylt 10 min.","Steg svinekød med hoisinsauce 5-6 min.","Smør mayonnaise på flutes. Fyld med kød, syltet gulerod, agurk og koriander.","Spis straks mens brødet er sprødt."],
+  hotdog:["Kog pølser i vand 5 min. Varm brød 2 min i ovnen.","Rør mayo, finthakket agurk og sennep til remoulade.","Anret og top med remoulade, ketchup og ristet løg."],
+  fiskefilet:["Kog kartofler 18 min. Krydr fiskefileter.","Vend i mel, æg og panko. Steg i smør 3 min per side til gyldne.","Server med remoulade og citron."],
+  schnitzels:["Kog kartofler. Skær i skiver og bland med mayo og purløg.","Bank schnitzel flad. Krydr og vend i mel, æg og panko.","Steg i smør 3 min per side til sprød. Server med kartoffelsalat og citron."],
+  nachos:["Forvarm ovn til 200°C. Steg kylling i tern 5-6 min.","Fordel nachos på bageplade. Top med kylling og ost.","Bag 8-10 min til osten bobler. Top med salsa og guacamole."],
+  tortillapizza:["Forvarm ovn til 220°C. Smør passata på tortillas med hvidløg og oregano.","Fordel mozzarella, topping og tomater. Bag 8-10 min.","Skær i stykker og server straks."],
+  nudelwok:["Kog nudler 4 min. Skær gulerødder i strimler og steg 3 min.","Tilsæt majs og ærter 1 min. Skub til side og scramble æg.","Bland alt med soya og sesamolie. Server straks."],
+  kyllingnuggets:["Skær kylling i stykker. Krydr mel med paprika og salt.","Vend kylling i mel, æg og panko. Steg 3-4 min per side til gyldne.","Bag kartoffelbåde 20 min ved 200°C. Server med dip."],
+  wrapskinke:["Steg kylling og skær i strimler. Varm wraps 20 sek i mikroovn.","Smør creme fraiche på. Fordel kylling, ost, majs og salat.","Rul stramt og skær på midten."],
+  ossobuco:["Krydr skankerne og brun på alle sider 5-6 min. Tag ud.","Svits løg, gulerødder, selleri og hvidløg 5 min.","Deglacér med hvidvin og lad fordampe halvt. Tilsæt tomater.","Læg skankerne tilbage. Simre tildækket 35-40 min.","Riv citronskal og bland med hakket hvidløg og persille til gremolata.","Lav risotto (se risotto-opskrift). Server ossobuco med risotto og gremolata."],
+  saltimbocca:["Kog kartofler.","Læg et salvieblad på hver schnitzel og vikl to skiver parmaskinke om — fix med tandstik.","Steg i smør 2-3 min per side til gylden. Tag ud.","Deglacér panden med hvidvin og lad reducere halvt.","Rør koldt smør i saucen.","Server med kartofler og sauce."],
+  cacciatora:["Krydr kyllingelår og brun 4-5 min per side. Tag ud.","Svits løg og hvidløg 3 min.","Deglacér med hvidvin og lad fordampe. Tilsæt tomater, oliven og kapers.","Læg kylling tilbage med rosmarin. Simre tildækket 30 min.","Smag til med salt og peber.","Server med ristet brød til at suge saucen op."],
+  trufflepasta:["Kog pasta — gem kogevand.","Steg svampe ved høj varme 5-6 min til gyldne — ikke for mange ad gangen.","Svits hvidløg 1 min. Tilsæt fløde og simre 3 min.","Bland pasta med svampe og sauce — tilsæt kogevand til cremet konsistens.","Riv parmesan over og dryp trøffelolie i.","Top med persille og server straks."],
+  amatriciana:["Kog rigatoni — gem kogevand.","Steg guanciale/bacon ved lav varme til fedtet smelter og det er sprødt. Tag ud.","Tilsæt chiliflager og hæld hvidvin i — lad fordampe.","Tilsæt tomater og simre 12 min. Krydr.","Bland pasta med sauce og lidt kogevand. Vend guanciale i.","Riv pecorino over — ingen parmesan i denne ret."],
+  caprese:["Kog kartofler.","Krydr kylling og steg 5-6 min per side til gennembagt.","Halvér cherrytomater og steg 2 min i samme pande.","Læg mozzarella over kylling og lad smelte under låg 2 min.","Reducer balsamico i panden til sirupagtig glasur.","Anret med kartofler, tomater, basilikum og balsamicoglasur."],
+  suppli:["Lav risotto og lad afkøle helt.","Blend med parmesan og æg til fast masse.","Form til æggestore boller med et stykke mozzarella i midten.","Vend i rasp og steg i rigeligt olie 3-4 min til dybt gyldne.","Lad dryppe af på køkkenrulle.","Server med tomatsauce til dipping."],
+  gnocchisauce:["Rist pinjekerner på tør pande til gyldne.","Halvér cherrytomater og steg i smør 3 min til bløde.","Kog gnocchi i saltet vand til de flyder op — ca. 2 min. Dræn.","Bland gnocchi med pesto og tomater.","Riv parmesan over og drys pinjekerner på."],
+  koteletsennep:["Kog ris.","Krydr koteletter og steg 4 min per side. Hold varm.","Svits hvidløg og timian 1 min i stegepanden.","Tilsæt sennep og fløde — simre 4 min til sauce.","Smag til med salt og peber.","Server koteletter med sennepssauce og ris."],
+  forloren2:["Forvarm ovn til 200°C.","Bland kød med æg, mel, salt og peber. Form til aflangt brød.","Læg baconskiver over. Hæld bouillon i fadet.","Bag 30-35 min. Gem stegeskyen til sovs.","Kog kartofler og varm rødkål.","Lav sovs på stegeskyen med lidt mel. Server i skiver."],
+  oksesteg:["Brun stegen grundigt på alle sider 6-8 min. Tag ud.","Svits løg og gulerødder 4 min. Rør tomatpuré i.","Deglacér med rødvin og lad fordampe halvt. Tilsæt bouillon og timian.","Læg stegen tilbage. Simre tildækket 35 min.","Kog kartofler. Reducer saucen og smag til.","Skær stegen i skiver og server med sauce og kartofler."],
+  lammekotelet:["Krydr lammekoteletter med hvidløg, citron, salt og peber.","Kog kartofler.","Steg 3 min per side — rosa indeni.","Blend yoghurt med frisk mynte og salt til sauce.","Server med kartofler, yoghurtmyntesauce og grøn salat."],
+  kyllingporre:["Kog kartofler.","Krydr kylling og steg 5-6 min per side. Tag ud.","Skær porre i skiver og steg 5 min i stegepanden.","Svits hvidløg 1 min. Deglacér med hvidvin og lad fordampe.","Tilsæt fløde og sennep — simre 4 min. Kom kylling tilbage.","Server med kartofler."],
+  fiskovn:["Forvarm ovn til 200°C. Kog kartofler 15 min.","Smelt smør med hvidløg og citronsaft.","Læg fisk i ovnfast fad og hæld smørsauce over.","Top med kapers. Bag 14-16 min.","Hak persille og drys over.","Server med kartofler."],
+  svinerevben:["Forvarm ovn til 190°C.","Krydr ribben med paprika, spidskommen, salt og peber.","Bag tildækket med folie 35 min. Afdæk og pensl med BBQ-sauce.","Bag 10 min mere til karamelliseret.","Skær kartofler i både og bag 25 min ved 200°C.","Bland kål og mayo til coleslaw. Server med kartoffelbåde."],
+  fiskpinde:["Kog kartofler 18 min. Blancher ærter 2 min.","Skær torsk i fingre ca. 2x6 cm.","Krydr mel med salt og paprika. Vend fisk i mel, æg og panko.","Steg i rigeligt smør 2-3 min per side til gyldne.","Server med kartofler, ærter og remoulade."],
+  spagsmiley2:["Forvarm ovn til 220°C.","Smør passata på pizzabundene med lidt oregano.","Fordel revet mozzarella, skinke og majs.","Bag 8-10 min til osten bobler.","Skær i stykker og server."],
+  pastabolle:["Kog spaghetti i rigeligt saltet vand.","Smelt smør med presset hvidløg 1 min ved lav varme.","Dræn pasta og vend straks i smørret.","Riv parmesan over og krydr med sort peber.","Server straks — enkelt og lækkert."],
+  kyllnuggets2:["Forvarm ovn til 200°C.","Skær søbatats i både. Vend i olie, salt og paprika. Bag 25 min.","Skær kylling i stykker. Vend i mel, æg og panko.","Steg i olie 3-4 min per side til gyldne og gennembagt.","Server nuggets med søde kartoffelbåde og ketchup."],
+  ostetoast:["Pisk æg og mælk i en dyb tallerken.","Smør ost og skinke på 4 brødskiver. Læg de andre skiver ovenpå.","Vend sandwichene i æg-blandingen på begge sider.","Steg i smør 3 min per side til gylden og sprød.","Skær på skrå og server straks."],
+  tantanmen:["Kog nudler efter pakken. Dræn.","Brun hakket kød med hvidløg og ingefær 4 min.","Rør tahini, soya og chiliflager i kødet.","Varm bouillon op og rør tahini-blandingen i.","Anret nudler i skåle og hæld bouillon over.","Top med purløg og ekstra chiliflager."],
+  okonomiyaki:["Snit kål fint. Bland med mel, æg og lidt vand til tyk dej.","Varm olie i pande. Hæld halvdelen af dejen i og form rund.","Læg baconskiver ovenpå. Steg 4-5 min ved middel varme.","Vend forsigtigt og steg 4 min mere.","Dryp mayonnaise og worcestershiresauce over i zigzag.","Drys bonito flakes og purløg over."],
+  mapo:["Kog ris.","Skær tofu i tern. Hak hvidløg og ingefær.","Brun hakket kød 3-4 min. Tilsæt hvidløg og ingefær 1 min.","Tilsæt doubanjiang og soya — steg 1 min.","Tilsæt tofu forsigtigt og varm 3 min. Rør sesamolie i.","Server over ris med hakket purløg."],
+  vietnamesisk:["Udblød glasnudler 5 min i kogende vand. Dræn og afkøl.","Skær agurk og gulerødder i julienne.","Bland fiskesauce, limesaft, sukker og lidt chili til dressing.","Steg rejer 2 min til lyserøde.","Anret nudler, salat, grøntsager og rejer i bowle.","Dryp dressing over og top med mynte."],
+  koreanskbowl:["Bland soya, sesamolie, sukker og hvidløg til marinade.","Mariner oksekød 10 min.","Steg ved høj varme 3-4 min til karamelliseret.","Kog ris. Skær agurk i tynde skiver.","Anret ris med oksekød, kimchi og agurk.","Drys sesamfrø over."]
 };
-const CATS={'Kød & fisk':['kylling','oksekød','svinekød','hakket','laks','fisk','bacon','skinke','pølse','rejer','tun','torsk','sild'],'Grøntsager':['løg','hvidløg','tomat','gulerod','gulerødder','broccoli','spinat','kartofler','peberfrugt','salat','squash','champignon','selleri','aubergine','zucchini','asparges','edamame'],'Mejeri & æg':['mælk','ost','fløde','smør','æg','yoghurt','creme','mozzarella','parmesan','cheddar','feta'],'Tørvarer':['pasta','spaghetti','ris','mel','bouillon','dåse','passata','kokosmælk','olie','linser','couscous','rasp','nudler'],'Brød & bagt':['brød','boller','pizza','bund','tortilla','wraps','pita','naan'],'Sauce & krydderier':['pesto','sovs','sauce','ketchup','sennep','karry','krydderi','soya','teriyaki','bbq'],'Andet':[]};
-const CICO={'Kød & fisk':'🥩','Grøntsager':'🥦','Mejeri & æg':'🧀','Tørvarer':'🫙','Brød & bagt':'🍞','Sauce & krydderier':'🧴','Andet':'🛒'};
-const DAYS=['Mandag','Tirsdag','Onsdag','Torsdag','Fredag','Lørdag','Søndag'];
-const TODAY=(new Date().getDay()+6)%7;
-const CUR_MONTH=new Date().getMonth();
 
-let planDays=5,weekPlan=DAYS.map(d=>({day:d,meal:null})),shopping=[],favs=[],history=[],selStore='Ingen',favFilter='Alle';
+var STORES = {
+  "Ingen":["Kød & fisk","Grøntsager","Mejeri & æg","Tørvarer","Brød & bagt","Sauce & krydderier","Andet"],
+  "Netto":["Grøntsager","Kød & fisk","Mejeri & æg","Brød & bagt","Tørvarer","Sauce & krydderier","Andet"],
+  "Rema 1000":["Grøntsager","Kød & fisk","Mejeri & æg","Tørvarer","Brød & bagt","Sauce & krydderier","Andet"],
+  "Føtex":["Kød & fisk","Grøntsager","Mejeri & æg","Brød & bagt","Sauce & krydderier","Tørvarer","Andet"],
+  "Lidl":["Grøntsager","Kød & fisk","Tørvarer","Mejeri & æg","Brød & bagt","Sauce & krydderier","Andet"]
+};
+var CATS = {"Kød & fisk":["kylling","oksekød","svinekød","hakket","laks","fisk","bacon","skinke","pølse","rejer","tun","torsk","sild","flæsk"],"Grøntsager":["løg","hvidløg","tomat","gulerod","gulerødder","broccoli","spinat","kartofler","peberfrugt","salat","squash","champignon","selleri","aubergine","zucchini","asparges","edamame","ærter","kål","purløg"],"Mejeri & æg":["mælk","ost","fløde","smør","æg","yoghurt","creme","mozzarella","parmesan","cheddar","feta"],"Tørvarer":["pasta","spaghetti","ris","mel","bouillon","dåse","passata","kokosmælk","olie","linser","couscous","rasp","nudler","panko","bønner"],"Brød & bagt":["brød","boller","pizza","bund","tortilla","wraps","pita","naan","bao","flute"],"Sauce & krydderier":["pesto","sovs","sauce","ketchup","sennep","karry","krydderi","soya","teriyaki","bbq","miso","harissa","gochujang","hoisin"],"Andet":[]};
+var CICO = {"Kød & fisk":"🥩","Grøntsager":"🥦","Mejeri & æg":"🧀","Tørvarer":"🫙","Brød & bagt":"🍞","Sauce & krydderier":"🧴","Andet":"🛒"};
+var DAYS = ["Mandag","Tirsdag","Onsdag","Torsdag","Fredag","Lørdag","Søndag"];
+var TODAY = (new Date().getDay()+6)%7;
+var CUR_MONTH = new Date().getMonth();
 
-function lsSave(){try{localStorage.setItem('fm_d',planDays);localStorage.setItem('fm_w',JSON.stringify(weekPlan));localStorage.setItem('fm_s',JSON.stringify(shopping));localStorage.setItem('fm_f',JSON.stringify(favs));localStorage.setItem('fm_h',JSON.stringify(history));localStorage.setItem('fm_st',selStore);}catch(e){}}
-function lsLoad(){try{const d=localStorage.getItem('fm_d');if(d)planDays=parseInt(d)||5;const w=localStorage.getItem('fm_w');if(w)weekPlan=JSON.parse(w);const s=localStorage.getItem('fm_s');if(s)shopping=JSON.parse(s);const f=localStorage.getItem('fm_f');if(f)favs=JSON.parse(f);const h=localStorage.getItem('fm_h');if(h)history=JSON.parse(h);const st=localStorage.getItem('fm_st');if(st)selStore=st;}catch(e){}}
-let _st=null;
-function save(){lsSave();if(_st)clearTimeout(_st);if(window.storage)_st=setTimeout(async()=>{try{await Promise.all([window.storage.set('fm_d',String(planDays)),window.storage.set('fm_w',JSON.stringify(weekPlan)),window.storage.set('fm_s',JSON.stringify(shopping)),window.storage.set('fm_f',JSON.stringify(favs)),window.storage.set('fm_h',JSON.stringify(history)),window.storage.set('fm_st',selStore)]);}catch(e){}},1200);}
-async function boot(){lsLoad();renderAll();if(!window.storage)return;try{const[d,w,s,f,h,st]=await Promise.all([window.storage.get('fm_d').catch(()=>null),window.storage.get('fm_w').catch(()=>null),window.storage.get('fm_s').catch(()=>null),window.storage.get('fm_f').catch(()=>null),window.storage.get('fm_h').catch(()=>null),window.storage.get('fm_st').catch(()=>null)]);if(d)planDays=parseInt(d.value)||5;if(w)weekPlan=JSON.parse(w.value);if(s)shopping=JSON.parse(s.value);if(f)favs=JSON.parse(f.value);if(h)history=JSON.parse(h.value);if(st)selStore=st.value;lsSave();renderAll();}catch(e){}}
+var planDays=5, weekPlan=DAYS.map(function(d){return {day:d,meal:null};}), shopping=[], favs=[], mealHistory=[], selStore="Ingen", favFilter="Alle";
+
+function lsSave(){try{localStorage.setItem("fm_d",planDays);localStorage.setItem("fm_w",JSON.stringify(weekPlan));localStorage.setItem("fm_s",JSON.stringify(shopping));localStorage.setItem("fm_f",JSON.stringify(favs));localStorage.setItem("fm_h",JSON.stringify(mealHistory));localStorage.setItem("fm_st",selStore);}catch(e){}}
+function lsLoad(){try{var d=localStorage.getItem("fm_d");if(d)planDays=parseInt(d)||5;var w=localStorage.getItem("fm_w");if(w)weekPlan=JSON.parse(w);var s=localStorage.getItem("fm_s");if(s)shopping=JSON.parse(s);var f=localStorage.getItem("fm_f");if(f)favs=JSON.parse(f);var h=localStorage.getItem("fm_h");if(h)mealHistory=JSON.parse(h);var st=localStorage.getItem("fm_st");if(st)selStore=st;}catch(e){}}
+var _saveT=null;
+function save(){lsSave();if(_saveT)clearTimeout(_saveT);if(window.storage)_saveT=setTimeout(function(){try{Promise.all([window.storage.set("fm_d",String(planDays)),window.storage.set("fm_w",JSON.stringify(weekPlan)),window.storage.set("fm_s",JSON.stringify(shopping)),window.storage.set("fm_f",JSON.stringify(favs)),window.storage.set("fm_h",JSON.stringify(mealHistory)),window.storage.set("fm_st",selStore)]);}catch(e){}},1200);}
+function boot(){lsLoad();renderAll();if(!window.storage)return;Promise.all([window.storage.get("fm_d").catch(function(){return null;}),window.storage.get("fm_w").catch(function(){return null;}),window.storage.get("fm_s").catch(function(){return null;}),window.storage.get("fm_f").catch(function(){return null;}),window.storage.get("fm_h").catch(function(){return null;}),window.storage.get("fm_st").catch(function(){return null;})]).then(function(r){if(r[0])planDays=parseInt(r[0].value)||5;if(r[1])weekPlan=JSON.parse(r[1].value);if(r[2])shopping=JSON.parse(r[2].value);if(r[3])favs=JSON.parse(r[3].value);if(r[4])mealHistory=JSON.parse(r[4].value);if(r[5])selStore=r[5].value;lsSave();renderAll();}).catch(function(){});}
 function renderAll(){renderDS();renderPlan();renderList();renderFavs();renderStoreRow();}
 
-function shuf(a){return[...a].sort(()=>Math.random()-.5)}
-function catOf(n){const l=n.toLowerCase();for(const[c,kw]of Object.entries(CATS))if(kw.some(k=>l.includes(k)))return c;return'Andet';}
-function showS(id,btn){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');btn.classList.add('active');}
-function closeMo(e){if(e.target===document.getElementById('modal'))document.getElementById('modal').classList.remove('open');}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-function isFav(n){return favs.includes(n);}
-function toggleFav(n){if(isFav(n))favs=favs.filter(f=>f!==n);else favs.push(n);save();renderFavs();}
+function shuf(a){return[].concat(a).sort(function(){return Math.random()-.5;});}
+function catOf(n){var l=n.toLowerCase();var keys=Object.keys(CATS);for(var i=0;i<keys.length;i++){var kw=CATS[keys[i]];for(var j=0;j<kw.length;j++){if(l.indexOf(kw[j])>=0)return keys[i];}}return"Andet";}
+function showS(id,btn){document.querySelectorAll(".screen").forEach(function(s){s.classList.remove("active");});document.querySelectorAll(".nb").forEach(function(b){b.classList.remove("active");});document.getElementById("screen-"+id).classList.add("active");btn.classList.add("active");}
+function closeMo(e){if(e.target===document.getElementById("modal"))document.getElementById("modal").classList.remove("open");}
+function toast(msg){var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(function(){t.classList.remove("show");},2500);}
+function isFav(n){return favs.indexOf(n)>=0;}
+function toggleFav(name){if(isFav(name))favs=favs.filter(function(f){return f!==name;});else favs.push(name);save();renderFavs();}
 
-// ─── MADPLAN ─────────────────────────────────────────────────────────────────
 function renderDS(){
-  document.getElementById('ds').innerHTML=[2,3,4,5,6,7].map(n=>`<button class="dp ${n===planDays?'active':''}" onclick="setDays(${n})">${n}</button>`).join('');
-  document.getElementById('psub').textContent=`${planDays} dage · 4 pers`;
+  document.getElementById("ds").innerHTML=[2,3,4,5,6,7].map(function(n){return'<button class="dp '+(n===planDays?"active":"")+'" onclick="setDays('+n+')">'+n+"</button>";}).join("");
+  document.getElementById("psub").textContent=planDays+" dage · 4 pers";
 }
 function setDays(n){planDays=n;renderDS();renderPlan();save();}
 function renderPlan(){
-  document.getElementById('plan-list').innerHTML=weekPlan.slice(0,planDays).map((item,i)=>`
-    <div class="dr ${i===TODAY?'dt':''}">
-      <span class="dl">${item.day.slice(0,3).toUpperCase()}</span>
-      ${item.meal
-        ?`<span class="mt" onclick="openMeal(${i})">${item.meal.n}</span>
-          <span class="mp">⏱${item.meal.t}m · ~${item.meal.c}kr</span>
-          <button class="star-btn" onclick="toggleFav('${item.meal.n.replace(/'/g,"\\'")}');renderPlan()">${isFav(item.meal.n)?'⭐':'☆'}</button>
-          <button class="sb" onclick="swapDay(${i})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 4v6h6"/><path d="M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg></button>`
-        :`<span class="em">Ikke planlagt</span><span></span><span></span>
-          <button class="sb" onclick="swapDay(${i})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>`}
-    </div>`).join('');
+  document.getElementById("plan-list").innerHTML=weekPlan.slice(0,planDays).map(function(item,i){
+    return'<div class="dr '+(i===TODAY?"dt":"")+'"><span class="dl">'+item.day.slice(0,3).toUpperCase()+"</span>"+(item.meal?'<span class="mt" onclick="openMeal('+i+')">'+item.meal.n+'</span><span class="mp">⏱'+item.meal.t+"m · ~"+item.meal.c+'kr</span><button class="star-btn" onclick="toggleFav(\''+item.meal.n.replace(/'/g,"\\'")+'\')">'+(isFav(item.meal.n)?"⭐":"☆")+'</button><button class="sb" onclick="swapDay('+i+')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 4v6h6"/><path d="M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg></button>':'<span class="em">Ikke planlagt</span><span></span><span></span><button class="sb" onclick="swapDay('+i+')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>')+"</div>";
+  }).join("");
   renderBudget();
 }
 function renderBudget(){
-  const meals=weekPlan.slice(0,planDays).filter(d=>d.meal);
-  if(!meals.length){document.getElementById('budget').innerHTML='';return;}
-  const total=meals.reduce((s,d)=>s+(d.meal.c||0),0);
-  const max=Math.max(...meals.map(d=>d.meal.c||0));
-  const bars=meals.map(d=>`<div class="br"><span>${d.day.slice(0,3)}</span><div class="bbg"><div class="bbf" style="width:${Math.round((d.meal.c||0)/max*100)}%"></div></div><span class="bkr">${d.meal.c}</span></div>`).join('');
-  document.getElementById('budget').innerHTML=`<div class="bcard"><div class="bm"><div class="bl">Uge estimat</div><div class="ba">${total} <em>kr</em></div><div class="bs">~${Math.round(total/4)} kr per person</div></div><div class="bb">${bars}</div></div>`;
+  var meals=weekPlan.slice(0,planDays).filter(function(d){return d.meal;});
+  if(!meals.length){document.getElementById("budget").innerHTML="";return;}
+  var total=meals.reduce(function(s,d){return s+(d.meal.c||0);},0);
+  var max=Math.max.apply(null,meals.map(function(d){return d.meal.c||0;}));
+  var bars=meals.map(function(d){return'<div class="br"><span>'+d.day.slice(0,3)+'</span><div class="bbg"><div class="bbf" style="width:'+Math.round((d.meal.c||0)/max*100)+'%"></div></div><span class="bkr">'+d.meal.c+"</span></div>";}).join("");
+  document.getElementById("budget").innerHTML='<div class="bcard"><div class="bm"><div class="bl">Uge estimat</div><div class="ba">'+total+' <em>kr</em></div><div class="bs">~'+Math.round(total/4)+' kr per person</div></div><div class="bb">'+bars+"</div></div>";
 }
-function seasonalMeals(){return M.filter(m=>!m.season||m.season.includes(CUR_MONTH));}
+function seasonalMeals(){return M.filter(function(m){return !m.mo||m.mo.indexOf(CUR_MONTH)>=0;});}
 function generatePlan(){
-  const pool=seasonalMeals();
-  const recent=history.flat();
-  const favPool=pool.filter(m=>isFav(m.n));
-  const sh=shuf(pool),picked=[],usedSyn=new Set();
-  for(const m of shuf(favPool)){if(picked.length>=Math.min(2,planDays))break;if(!recent.includes(m.n)){picked.push(m);(m.sy||[]).forEach(s=>usedSyn.add(s));}}
-  for(const m of sh){if(picked.length>=planDays)break;if(picked.some(p=>p.n===m.n))continue;if(recent.slice(0,planDays*2).includes(m.n))continue;const ov=(m.sy||[]).some(s=>usedSyn.has(s));if(ov||Math.random()<0.4){picked.push(m);(m.sy||[]).forEach(s=>usedSyn.add(s));}}
-  for(const m of sh){if(picked.length>=planDays)break;if(!picked.some(p=>p.n===m.n))picked.push(m);}
-  for(let i=0;i<planDays;i++)weekPlan[i]={day:DAYS[i],meal:picked[i]||null};
-  history.unshift(picked.map(m=>m.n));
-  if(history.length>4)history.pop();
-  save();renderPlan();toast(`${planDays} retter genereret ✦`);
+  var pool=seasonalMeals();
+  var recent=mealHistory.reduce(function(a,b){return a.concat(b);},[]);
+  var favPool=pool.filter(function(m){return isFav(m.n);});
+  var sh=shuf(pool),picked=[],usedSyn={},seenIds={};
+  shuf(favPool).forEach(function(m){if(picked.length>=Math.min(2,planDays))return;if(recent.indexOf(m.n)<0&&!seenIds[m.id]){picked.push(m);seenIds[m.id]=1;(m.sy||[]).forEach(function(s){usedSyn[s]=1;});}});
+  sh.forEach(function(m){
+    if(picked.length>=planDays)return;
+    if(seenIds[m.id])return;
+    if(recent.slice(0,planDays*2).indexOf(m.n)>=0)return;
+    var ov=(m.sy||[]).some(function(s){return usedSyn[s];});
+    if(ov||Math.random()<0.4){picked.push(m);seenIds[m.id]=1;(m.sy||[]).forEach(function(s){usedSyn[s]=1;});}
+  });
+  sh.forEach(function(m){if(picked.length>=planDays)return;if(!seenIds[m.id]){picked.push(m);seenIds[m.id]=1;}});
+  for(var i=0;i<planDays;i++)weekPlan[i]={day:DAYS[i],meal:picked[i]||null};
+  mealHistory.unshift(picked.map(function(m){return m.n;}));
+  if(mealHistory.length>4)mealHistory.pop();
+  save();renderPlan();toast(planDays+" retter genereret ✦");
 }
 function swapDay(idx){
-  const ex=weekPlan.slice(0,planDays).filter((_,i)=>i!==idx&&weekPlan[i].meal).map(d=>d.meal.n);
-  const pool=seasonalMeals();
-  const[pick]=shuf(pool.filter(m=>m.n!==weekPlan[idx]?.meal?.n&&!ex.includes(m.n)));
-  if(pick){weekPlan[idx]={day:DAYS[idx],meal:pick};save();renderPlan();toast(pick.n);}
+  var ex=weekPlan.slice(0,planDays).filter(function(d,i){return i!==idx&&weekPlan[i].meal;}).map(function(d){return d.meal.n;});
+  var pool=seasonalMeals();
+  var options=shuf(pool.filter(function(m){return m.n!==(weekPlan[idx]&&weekPlan[idx].meal?weekPlan[idx].meal.n:"")&&ex.indexOf(m.n)<0;}));
+  if(options.length){weekPlan[idx]={day:DAYS[idx],meal:options[0]};save();renderPlan();toast(options[0].n);}
 }
+function parseQty(q){if(!q)return null;var s=q.toString().trim().toLowerCase();var mx=s.match(/^([0-9.,½¼¾]+)\s*([a-zæøå]*)/);if(!mx)return null;var num=parseFloat(mx[1].replace(",",".").replace("½",".5").replace("¼",".25").replace("¾",".75"));if(isNaN(num))return null;return{num:num,unit:mx[2]||"stk"};}
+function fmtQty(num,unit){var r=num%1===0?num:Math.round(num*10)/10;return(unit&&unit!=="stk")?r+" "+unit:r+" stk";}
 function openMeal(idx){
-  const m=weekPlan[idx]?.meal;if(!m)return;
-  document.getElementById('mb').innerHTML=`
-    <h2>${m.n}</h2>
-    <div class="mm"><span>⏱ ${m.t} min</span><span>👨‍👩‍👧‍👦 <span id="pv">4</span> pers</span><span class="co" id="prv">~${m.c} kr</span>${(m.sy||[]).length?'<span>✦ Deler råvarer</span>':''}</div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;background:var(--sf2);border-radius:12px;padding:10px 14px">
-      <label style="font-size:13px;color:var(--mu);white-space:nowrap">Portioner</label>
-      <input type="range" min="1" max="10" value="4" style="flex:1;accent-color:var(--ac)" oninput="scaleMeal(this.value,${idx})">
-      <span style="font-size:14px;font-weight:500;min-width:24px;text-align:right" id="pn">4</span>
-    </div>
-    <div class="ms"><h3>Ingredienser</h3><ul class="il" id="isc">${m.i.map(x=>`<li><span>${x.n}</span><span class="ir2"><span>${x.q}</span><span class="ipr">~${x.p} kr</span></span></li>`).join('')}</ul></div>
-    <div class="ms"><h3>Fremgangsmåde</h3><ol class="sl">${m.s.map(x=>`<li>${x}</li>`).join('')}</ol></div>
-    <div class="mbr">
-      <button class="mb se" onclick="document.getElementById('modal').classList.remove('open');swapDay(${idx})">↺ Skift</button>
-      <button class="mb se" id="fav-btn" onclick="toggleFav('${m.n.replace(/'/g,"\\'")}');document.getElementById('fav-btn').textContent=isFav('${m.n.replace(/'/g,"\\'")}')? '⭐ Favorit':'☆ Gem'">${isFav(m.n)?'⭐ Favorit':'☆ Gem'}</button>
-      <button class="mb ge" onclick="addToList(${idx})">+ Indkøb</button>
-    </div>`;
-  document.getElementById('modal').classList.add('open');
+  var m=weekPlan[idx]&&weekPlan[idx].meal;if(!m)return;
+  var steps=STEPS[m.id]||["Fremgangsmåde ikke tilgængelig."];
+  var p=4;
+  document.getElementById("mb").innerHTML="<h2>"+m.n+"</h2>"+'<div class="mm"><span>⏱ '+m.t+' min</span><span>👨‍👩‍👧‍👦 <span id="pv">4</span> pers</span><span class="co" id="prv">~'+m.c+' kr</span>'+(m.sy&&m.sy.length?'<span>✦ Deler råvarer</span>':"")+
+  '</div><div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;background:var(--sf2);border-radius:12px;padding:10px 14px"><label style="font-size:13px;color:var(--mu);white-space:nowrap">Portioner</label><input type="range" min="1" max="10" value="4" style="flex:1;accent-color:var(--ac)" oninput="scaleMeal(this.value,'+idx+')"><span style="font-size:14px;font-weight:500;min-width:24px;text-align:right" id="pn">4</span></div>'+
+  '<div class="ms"><h3>Ingredienser</h3><ul class="il" id="isc">'+m.i.map(function(x){return"<li><span>"+x.n+"</span><span class=\"ir2\"><span>"+x.q+"</span><span class=\"ipr\">~"+x.p+" kr</span></span></li>";}).join("")+"</ul></div>"+
+  '<div class="ms"><h3>Fremgangsmåde</h3><ol class="sl">'+steps.map(function(s){return"<li>"+s+"</li>";}).join("")+"</ol></div>"+
+  '<div class="mbr"><button class="mb se" onclick="document.getElementById(\'modal\').classList.remove(\'open\');swapDay('+idx+')">↺ Skift</button><button class="mb se" id="fav-btn" onclick="toggleFav(\''+m.n.replace(/'/g,"\\'")+'\')">'+(isFav(m.n)?"⭐ Favorit":"☆ Gem")+'</button><button class="mb ge" onclick="addToList('+idx+')">+ Indkøb</button></div>';
+  document.getElementById("modal").classList.add("open");
 }
-function parseQty(q){if(!q)return null;const s=q.toString().trim().toLowerCase();const mx=s.match(/^([0-9.,½¼¾]+)\s*([a-zæøå]*)/);if(!mx)return null;let num=parseFloat(mx[1].replace(',','.').replace('½','.5').replace('¼','.25').replace('¾','.75'));if(isNaN(num))return null;return{num,unit:mx[2]||'stk'};}
-function fmtQty(num,unit){const r=num%1===0?num:Math.round(num*10)/10;return unit&&unit!=='stk'?`${r} ${unit}`:`${r} stk`;}
 function scaleMeal(val,idx){
-  const m=weekPlan[idx]?.meal;if(!m)return;
-  const ratio=val/4;
-  document.getElementById('pv').textContent=val;
-  document.getElementById('pn').textContent=val;
-  document.getElementById('prv').textContent=`~${Math.round(m.c*ratio)} kr`;
-  document.getElementById('isc').innerHTML=m.i.map(x=>{const pq=parseQty(x.q);const nq=pq?fmtQty(Math.round(pq.num*ratio*10)/10,pq.unit):x.q;return`<li><span>${x.n}</span><span class="ir2"><span>${nq}</span><span class="ipr">~${Math.round((x.p||0)*ratio)} kr</span></span></li>`;}).join('');
+  var m=weekPlan[idx]&&weekPlan[idx].meal;if(!m)return;
+  var ratio=val/4;
+  document.getElementById("pv").textContent=val;
+  document.getElementById("pn").textContent=val;
+  document.getElementById("prv").textContent="~"+Math.round(m.c*ratio)+" kr";
+  document.getElementById("isc").innerHTML=m.i.map(function(x){var pq=parseQty(x.q);var nq=pq?fmtQty(Math.round(pq.num*ratio*10)/10,pq.unit):x.q;return"<li><span>"+x.n+"</span><span class=\"ir2\"><span>"+nq+"</span><span class=\"ipr\">~"+Math.round((x.p||0)*ratio)+" kr</span></span></li>";}).join("");
 }
-
-// ─── DEL MADPLAN ─────────────────────────────────────────────────────────────
 function planText(){
-  const lines=['🍽 Min madplan:\n'];
-  weekPlan.slice(0,planDays).forEach(d=>{if(d.meal)lines.push(`${d.day}: ${d.meal.n} (⏱${d.meal.t}min, ~${d.meal.c}kr)`);});
-  const total=weekPlan.slice(0,planDays).filter(d=>d.meal).reduce((s,d)=>s+(d.meal.c||0),0);
-  lines.push(`\nTotal: ~${total} kr`);
-  return lines.join('\n');
+  var lines=["🍽 Min madplan:\n"];
+  weekPlan.slice(0,planDays).forEach(function(d){if(d.meal)lines.push(d.day+": "+d.meal.n+" (⏱"+d.meal.t+"min, ~"+d.meal.c+"kr)");});
+  var total=weekPlan.slice(0,planDays).filter(function(d){return d.meal;}).reduce(function(s,d){return s+(d.meal.c||0);},0);
+  lines.push("\nTotal: ~"+total+" kr");
+  return lines.join("\n");
 }
-function sharePlan(){if(navigator.share){navigator.share({title:'Min madplan',text:planText()}).catch(()=>{});}else copyPlan();}
-function copyPlan(){navigator.clipboard.writeText(planText()).then(()=>toast('Kopieret!')).catch(()=>{const ta=document.createElement('textarea');ta.value=planText();document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Kopieret!');});}
-
-// ─── FAVORITTER ──────────────────────────────────────────────────────────────
+function sharePlan(){if(navigator.share){navigator.share({title:"Min madplan",text:planText()}).catch(function(){});}else copyPlan();}
+function copyPlan(){fallbackCopy(planText());}
 function renderFavs(){
-  const tags=[...new Set(M.filter(m=>favs.includes(m.n)).flatMap(m=>m.sy||[]))];
-  document.getElementById('fav-filters').innerHTML=['Alle',...tags].map(t=>`<button class="fpill ${favFilter===t?'active':''}" onclick="setFavFilter('${t}')">${t==='Alle'?'Alle':({A:'Kylling',B:'Okse/svin',C:'Fisk',D:'Svinekød',E:'Pasta',F:'Asiatisk'}[t]||t)}</button>`).join('');
-  const filtered=M.filter(m=>favs.includes(m.n)&&(favFilter==='Alle'||(m.sy||[]).includes(favFilter)));
-  if(!filtered.length){document.getElementById('fav-list').innerHTML=`<div class="fav-empty">Ingen favoritter endnu.<br>Tryk ☆ på en ret for at gemme den.</div>`;return;}
-  document.getElementById('fav-list').innerHTML=filtered.map(m=>`
-    <div class="card" style="margin-bottom:10px;cursor:pointer" onclick="openFavMeal('${m.n.replace(/'/g,"\\'")}')">
-      <div style="padding:12px 16px;display:flex;align-items:center;gap:10px">
-        <div style="flex:1"><div style="font-size:14px;font-weight:500">${m.n}</div><div style="font-size:12px;color:var(--mu);margin-top:2px">⏱ ${m.t} min · ~${m.c} kr</div></div>
-        <button class="star-btn" onclick="event.stopPropagation();toggleFav('${m.n.replace(/'/g,"\\'")}')">⭐</button>
-      </div>
-    </div>`).join('');
+  var tags=[];
+  M.filter(function(m){return favs.indexOf(m.n)>=0;}).forEach(function(m){(m.sy||[]).forEach(function(s){if(tags.indexOf(s)<0)tags.push(s);});});
+  var labels={A:"Kylling",B:"Okse/svin",C:"Fisk",D:"Svinekød",E:"Pasta",F:"Asiatisk"};
+  document.getElementById("fav-filters").innerHTML=["Alle"].concat(tags).map(function(t){return'<button class="fpill '+(favFilter===t?"active":"")+'" onclick="setFavFilter(\''+t+'\')">'+(t==="Alle"?"Alle":(labels[t]||t))+"</button>";}).join("");
+  var filtered=M.filter(function(m){return favs.indexOf(m.n)>=0&&(favFilter==="Alle"||(m.sy||[]).indexOf(favFilter)>=0);});
+  if(!filtered.length){document.getElementById("fav-list").innerHTML='<div class="fav-empty">Ingen favoritter endnu.<br>Tryk ☆ på en ret for at gemme den.</div>';return;}
+  document.getElementById("fav-list").innerHTML=filtered.map(function(m){return'<div class="card" style="margin-bottom:10px;cursor:pointer" onclick="openFavMeal(\''+m.id+'\')"><div style="padding:12px 16px;display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-size:14px;font-weight:500">'+m.n+'</div><div style="font-size:12px;color:var(--mu);margin-top:2px">⏱ '+m.t+' min · ~'+m.c+' kr</div></div><button class="star-btn" onclick="event.stopPropagation();toggleFav(\''+m.n.replace(/'/g,"\\'")+'\')"  >⭐</button></div></div>';}).join("");
 }
 function setFavFilter(t){favFilter=t;renderFavs();}
-function openFavMeal(name){
-  const m=M.find(x=>x.n===name);if(!m)return;
-  document.getElementById('mb').innerHTML=`
-    <h2>${m.n}</h2>
-    <div class="mm"><span>⏱ ${m.t} min</span><span class="co">~${m.c} kr</span></div>
-    <div class="ms"><h3>Ingredienser</h3><ul class="il">${m.i.map(x=>`<li><span>${x.n}</span><span class="ir2"><span>${x.q}</span><span class="ipr">~${x.p} kr</span></span></li>`).join('')}</ul></div>
-    <div class="ms"><h3>Fremgangsmåde</h3><ol class="sl">${m.s.map(x=>`<li>${x}</li>`).join('')}</ol></div>
-    <div class="mbr"><button class="mb se" onclick="toggleFav('${m.n.replace(/'/g,"\\'")}');renderFavs();document.getElementById('modal').classList.remove('open')">⭐ Fjern favorit</button></div>`;
-  document.getElementById('modal').classList.add('open');
+function openFavMeal(id){
+  var m=null;for(var i=0;i<M.length;i++){if(M[i].id===id){m=M[i];break;}}
+  if(!m)return;
+  var steps=STEPS[m.id]||["Fremgangsmåde ikke tilgængelig."];
+  document.getElementById("mb").innerHTML="<h2>"+m.n+"</h2>"+'<div class="mm"><span>⏱ '+m.t+' min</span><span class="co">~'+m.c+' kr</span></div>'+
+  '<div class="ms"><h3>Ingredienser</h3><ul class="il">'+m.i.map(function(x){return"<li><span>"+x.n+"</span><span class=\"ir2\"><span>"+x.q+"</span><span class=\"ipr\">~"+x.p+" kr</span></span></li>";}).join("")+"</ul></div>"+
+  '<div class="ms"><h3>Fremgangsmåde</h3><ol class="sl">'+steps.map(function(s){return"<li>"+s+"</li>";}).join("")+"</ol></div>"+
+  '<div class="mbr"><button class="mb se" onclick="toggleFav(\''+m.n.replace(/'/g,"\\'")+'\')" >⭐ Fjern favorit</button></div>';
+  document.getElementById("modal").classList.add("open");
 }
-
-// ─── INDKØBSLISTE ────────────────────────────────────────────────────────────
-function renderStoreRow(){
-  document.getElementById('store-row').innerHTML=Object.keys(STORES).map(s=>`<button class="store-pill ${s===selStore?'active':''}" onclick="setStore('${s}')">${s}</button>`).join('');
-}
+function renderStoreRow(){document.getElementById("store-row").innerHTML=Object.keys(STORES).map(function(s){return'<button class="store-pill '+(s===selStore?"active":"")+'" onclick="setStore(\''+s+'\')">'+s+"</button>";}).join("");}
 function setStore(s){selStore=s;save();renderList();}
-
 function listText(){
-  const undone=shopping.filter(i=>!i.done);
-  if(!undone.length)return'';
-  const order=STORES[selStore]||STORES['Ingen'];
-  const byCat={};
-  undone.forEach(item=>{const c=item.category||catOf(item.name);(byCat[c]=byCat[c]||[]).push(item);});
-  const sorted=Object.keys(byCat).sort((a,b)=>(order.indexOf(a)+1||99)-(order.indexOf(b)+1||99));
-  const lines=['🛒 Indkøbsliste:\n'];
-  sorted.forEach(cat=>{lines.push(`\n${CICO[cat]||'•'} ${cat}`);byCat[cat].forEach(i=>lines.push(`  • ${i.name}${i.qty?' — '+i.qty:''}${i.price?' (~'+i.price+'kr)':''}`));});
-  const total=undone.filter(i=>i.price).reduce((s,i)=>s+(i.price||0),0);
-  if(total)lines.push(`\nEstimeret total: ~${total} kr`);
-  return lines.join('\n');
+  var undone=shopping.filter(function(i){return !i.done;});if(!undone.length)return"";
+  var order=STORES[selStore]||STORES["Ingen"];
+  var byCat={};
+  undone.forEach(function(item){var c=item.category||catOf(item.name);if(!byCat[c])byCat[c]=[];byCat[c].push(item);});
+  var sorted=Object.keys(byCat).sort(function(a,b){return(order.indexOf(a)+1||99)-(order.indexOf(b)+1||99);});
+  var lines=["🛒 Indkøbsliste:\n"];
+  sorted.forEach(function(cat){lines.push("\n"+(CICO[cat]||"•")+" "+cat);byCat[cat].forEach(function(i){lines.push("  • "+i.name+(i.qty?" — "+i.qty:"")+(i.price?" (~"+i.price+"kr)":""));});});
+  var total=undone.filter(function(i){return i.price;}).reduce(function(s,i){return s+(i.price||0);},0);
+  if(total)lines.push("\nEstimeret total: ~"+total+" kr");
+  return lines.join("\n");
 }
-function shareList(){
-  const txt=listText();
-  if(!txt){toast('Listen er tom');return;}
-  if(navigator.share){navigator.share({title:'Indkøbsliste',text:txt}).catch(()=>fallbackCopy(txt));}
-  else fallbackCopy(txt);
-}
-function copyList(){
-  const txt=listText();
-  if(!txt){toast('Listen er tom');return;}
-  fallbackCopy(txt);
-}
-function fallbackCopy(txt){
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(txt).then(()=>toast('Liste kopieret!')).catch(()=>execCopy(txt));
-  } else {
-    execCopy(txt);
-  }
-}
-function execCopy(txt){
-  const ta=document.createElement('textarea');
-  ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
-  document.body.appendChild(ta);ta.focus();ta.select();
-  try{document.execCommand('copy');toast('Liste kopieret!');}catch(e){toast('Kunne ikke kopiere');}
-  document.body.removeChild(ta);
-}
-
+function shareList(){var txt=listText();if(!txt){toast("Listen er tom");return;}if(navigator.share){navigator.share({title:"Indkøbsliste",text:txt}).catch(function(){return fallbackCopy(txt);});}else fallbackCopy(txt);}
+function copyList(){var txt=listText();if(!txt){toast("Listen er tom");return;}fallbackCopy(txt);}
+function fallbackCopy(txt){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){toast("Kopieret!");}).catch(function(){execCopy(txt);});}else execCopy(txt);}
+function execCopy(txt){var ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand("copy");toast("Kopieret!");}catch(e){toast("Kunne ikke kopiere");}document.body.removeChild(ta);}
 function buildList(){
-  const meals=weekPlan.slice(0,planDays).filter(d=>d.meal);
-  if(!meals.length){toast('Generer en madplan først');return;}
-  const kept=shopping.filter(i=>!i._auto);
-  const map={};
-  meals.forEach(d=>{d.meal.i.forEach(x=>{const k=x.n.toLowerCase();if(!map[k]){map[k]={name:x.n,qty:x.q,price:x.p||0,usedIn:[],category:catOf(x.n),_auto:true,_parsed:parseQty(x.q)};}else{const ep=map[k]._parsed,ip=parseQty(x.q);if(ep&&ip&&ep.unit===ip.unit){ep.num+=ip.num;map[k].qty=fmtQty(ep.num,ep.unit);}if(x.p)map[k].price=(map[k].price||0)+x.p;}if(!map[k].usedIn.includes(d.meal.n))map[k].usedIn.push(d.meal.n);});});
-  Object.values(map).forEach(x=>{if(!kept.find(s=>s.name.toLowerCase()===x.name.toLowerCase()))kept.push({id:Date.now()+Math.random(),name:x.name,qty:x.qty,price:x.price||null,done:false,category:x.category,usedIn:x.usedIn,_auto:true});});
+  var meals=weekPlan.slice(0,planDays).filter(function(d){return d.meal;});
+  if(!meals.length){toast("Generer en madplan først");return;}
+  var kept=shopping.filter(function(i){return !i._auto;});
+  var map={};
+  meals.forEach(function(d){d.meal.i.forEach(function(x){var k=x.n.toLowerCase();if(!map[k]){map[k]={name:x.n,qty:x.q,price:x.p||0,usedIn:[],category:catOf(x.n),_auto:true,_parsed:parseQty(x.q)};}else{var ep=map[k]._parsed,ip=parseQty(x.q);if(ep&&ip&&ep.unit===ip.unit){ep.num+=ip.num;map[k].qty=fmtQty(ep.num,ep.unit);}if(x.p)map[k].price=(map[k].price||0)+x.p;}if(map[k].usedIn.indexOf(d.meal.n)<0)map[k].usedIn.push(d.meal.n);});});
+  Object.keys(map).forEach(function(k){var x=map[k];if(!kept.filter(function(s){return s.name.toLowerCase()===x.name.toLowerCase();}).length)kept.push({id:Date.now()+Math.random(),name:x.name,qty:x.qty,price:x.price||null,done:false,category:x.category,usedIn:x.usedIn,_auto:true});});
   shopping=kept;renderList();save();
-  const multi=Object.values(map).filter(i=>i.usedIn.length>1).length;
-  toast(`${Object.keys(map).length} varer · ${multi} deles`);
+  var multi=Object.keys(map).filter(function(k){return map[k].usedIn.length>1;}).length;
+  toast(Object.keys(map).length+" varer · "+multi+" deles");
 }
 function renderList(){
-  const el=document.getElementById('list-con');
-  if(!shopping.length){el.innerHTML=`<div style="padding:24px;text-align:center;color:var(--mu);font-size:14px">Tom liste</div>`;document.getElementById('list-tot').innerHTML='';document.getElementById('syn-area').innerHTML='';return;}
-  const undone=shopping.filter(i=>!i.done),done=shopping.filter(i=>i.done);
-  const multi=undone.filter(i=>i.usedIn&&i.usedIn.length>1);
-  document.getElementById('syn-area').innerHTML=multi.length?`<div class="syn"><span>✦</span><p><strong>${multi.length} varer bruges i flere retter</strong> — ${multi.slice(0,3).map(i=>i.name).join(', ')}.</p></div>`:'';
-  const order=STORES[selStore]||STORES['Ingen'];
-  const byCat={};
-  undone.forEach(item=>{const c=item.category||catOf(item.name);(byCat[c]=byCat[c]||[]).push(item);});
-  const sorted=Object.keys(byCat).sort((a,b)=>(order.indexOf(a)+1||99)-(order.indexOf(b)+1||99));
-  const ri=item=>{const isM=item.usedIn&&item.usedIn.length>1;return`<div class="li ${item.done?'done':''}" id="li-${item.id}"><div class="lim">${isM?'<div class="sd"></div>':''}<div class="lck" onclick="tog('${item.id}')"></div><span class="in">${item.name}</span><span class="iq">${item.qty||''}</span>${item.price?`<span class="ip">~${item.price}kr</span>`:''}<button class="id" onclick="del('${item.id}')">×</button></div>${(!item.done&&item.usedIn&&item.usedIn.length)?`<div class="iui">${item.usedIn.map(r=>`<span class="ut ${isM?'mx':''}">${r}</span>`).join('')}</div>`:''}</div>`;};
-  let html=sorted.map(cat=>`<div class="card" style="margin-bottom:10px"><div class="lch"><span>${CICO[cat]||'🛒'}</span>${cat}</div>${byCat[cat].map(ri).join('')}</div>`).join('');
-  if(done.length)html+=`<div class="card" style="margin-bottom:10px;opacity:.7"><div class="lch">✓ Afkrydset (${done.length})</div>${done.map(ri).join('')}</div>`;
+  var el=document.getElementById("list-con");
+  if(!shopping.length){el.innerHTML='<div style="padding:24px;text-align:center;color:var(--mu);font-size:14px">Tom liste</div>';document.getElementById("list-tot").innerHTML="";document.getElementById("syn-area").innerHTML="";return;}
+  var undone=shopping.filter(function(i){return !i.done;}),done=shopping.filter(function(i){return i.done;});
+  var multi=undone.filter(function(i){return i.usedIn&&i.usedIn.length>1;});
+  document.getElementById("syn-area").innerHTML=multi.length?'<div class="syn"><span>✦</span><p><strong>'+multi.length+' varer bruges i flere retter</strong> — '+multi.slice(0,3).map(function(i){return i.name;}).join(", ")+".</p></div>":"";
+  var order=STORES[selStore]||STORES["Ingen"];
+  var byCat={};
+  undone.forEach(function(item){var c=item.category||catOf(item.name);if(!byCat[c])byCat[c]=[];byCat[c].push(item);});
+  var sorted=Object.keys(byCat).sort(function(a,b){return(order.indexOf(a)+1||99)-(order.indexOf(b)+1||99);});
+  function ri(item){var isM=item.usedIn&&item.usedIn.length>1;return'<div class="li '+(item.done?"done":"")+'" id="li-'+item.id+'"><div class="lim">'+(isM?'<div class="sd"></div>':"")+
+  '<div class="lck" onclick="tog(\''+item.id+'\')"></div><span class="in">'+item.name+'</span><span class="iq">'+(item.qty||"")+"</span>"+(item.price?'<span class="ip">~'+item.price+"kr</span>":"")+
+  '<button class="id" onclick="del(\''+item.id+'\')">×</button></div>'+
+  ((!item.done&&item.usedIn&&item.usedIn.length)?'<div class="iui">'+item.usedIn.map(function(r){return'<span class="ut '+(isM?"mx":"")+'">'+(r)+"</span>";}).join("")+"</div>":"")+"</div>";}
+  var html=sorted.map(function(cat){return'<div class="card" style="margin-bottom:10px"><div class="lch"><span>'+(CICO[cat]||"🛒")+"</span>"+cat+"</div>"+byCat[cat].map(ri).join("")+"</div>";}).join("");
+  if(done.length)html+='<div class="card" style="margin-bottom:10px;opacity:.7"><div class="lch">✓ Afkrydset ('+done.length+")</div>"+done.map(ri).join("")+"</div>";
   el.innerHTML=html;
-  const priced=shopping.filter(i=>!i.done&&i.price);
-  document.getElementById('list-tot').innerHTML=priced.length?`<div class="ltr"><strong>Estimeret total</strong><strong>~${priced.reduce((s,i)=>s+(i.price||0),0)} kr</strong></div>`:'';
+  var priced=shopping.filter(function(i){return !i.done&&i.price;});
+  document.getElementById("list-tot").innerHTML=priced.length?'<div class="ltr"><strong>Estimeret total</strong><strong>~'+priced.reduce(function(s,i){return s+(i.price||0);},0)+" kr</strong></div>":"";
 }
-function addItem(){const v=document.getElementById('list-input').value.trim();if(v){shopping.push({id:Date.now(),name:v,qty:'',price:null,done:false,category:catOf(v),usedIn:[]});document.getElementById('list-input').value='';renderList();save();}}
-function tog(id){const it=shopping.find(i=>String(i.id)===String(id));if(it){it.done=!it.done;renderList();save();}}
-function del(id){shopping=shopping.filter(i=>String(i.id)!==String(id));renderList();save();}
-function clearDone(){shopping=shopping.filter(i=>!i.done);renderList();save();toast('Afkrydsede varer fjernet');}
+function addItem(){var v=document.getElementById("list-input").value.trim();if(v){shopping.push({id:Date.now(),name:v,qty:"",price:null,done:false,category:catOf(v),usedIn:[]});document.getElementById("list-input").value="";renderList();save();}}
+function tog(id){var it=shopping.filter(function(i){return String(i.id)===String(id);})[0];if(it){it.done=!it.done;renderList();save();}}
+function del(id){shopping=shopping.filter(function(i){return String(i.id)!==String(id);});renderList();save();}
+function clearDone(){shopping=shopping.filter(function(i){return !i.done;});renderList();save();toast("Afkrydsede varer fjernet");}
 function addToList(idx){
-  const meal=weekPlan[idx]?.meal;if(!meal)return;
-  meal.i.forEach(x=>{const ex=shopping.find(s=>s.name.toLowerCase()===x.n.toLowerCase());if(ex){if(!ex.usedIn)ex.usedIn=[];if(!ex.usedIn.includes(meal.n))ex.usedIn.push(meal.n);}else shopping.push({id:Date.now()+Math.random(),name:x.n,qty:x.q,price:x.p||null,done:false,category:catOf(x.n),usedIn:[meal.n]});});
-  renderList();save();document.getElementById('modal').classList.remove('open');toast('Ingredienser tilføjet');
+  var meal=weekPlan[idx]&&weekPlan[idx].meal;if(!meal)return;
+  meal.i.forEach(function(x){var ex=shopping.filter(function(s){return s.name.toLowerCase()===x.n.toLowerCase();})[0];if(ex){if(!ex.usedIn)ex.usedIn=[];if(ex.usedIn.indexOf(meal.n)<0)ex.usedIn.push(meal.n);}else shopping.push({id:Date.now()+Math.random(),name:x.n,qty:x.q,price:x.p||null,done:false,category:catOf(x.n),usedIn:[meal.n]});});
+  renderList();save();document.getElementById("modal").classList.remove("open");toast("Ingredienser tilføjet");
 }
 boot();
 </script>
